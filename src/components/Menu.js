@@ -1,6 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
-import './Menu.css'
 import searchimg from '../img/search.svg'
 import homeimg from '../img/home.svg'
 import positionimg from '../img/positions.svg'

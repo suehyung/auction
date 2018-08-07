@@ -8,7 +8,6 @@ import Menu from './Menu'
 import Nav from './Nav'
 import Positions from './Positions'
 import Watchlist from './Watchlist'
-import './App.css'
 
 class App extends Component {
   render () {
