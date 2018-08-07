@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
-import './Nav.css'
 
 class Nav extends Component {
   render () {
     return (
-      <div className='nav-container'>
-        <div className='nav-title'>
-          <div className='nav-title-light'>INTERNET BASEBALL LEAGUE</div>
-          <div className='nav-title-dark'>PRESEASON AUCTION</div>
+      <div className='title-container'>
+        <div className='title'>
+          <div className='title-light'>INTERNET BASEBALL LEAGUE</div>
+          <div className='title-dark'>PRESEASON AUCTION</div>
         </div>
       </div>
     )
