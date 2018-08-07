@@ -1,24 +1,25 @@
 import React, { Component } from 'react'
-import './Home.css'
 
 class Home extends Component {
   render () {
     return (
       <div className='main-container'>
         <div className='leftpane'>
-          <select id='position-select'>
-            <option value=''>Position</option>
-            <option value='C'>C</option>
-            <option value='1B'>1B</option>
-            <option value='2B'>2B</option>
-            <option value='SS'>SS</option>
-            <option value='3B'>3B</option>
-            <option value='CF'>CF</option>
-            <option value='OF'>OF</option>
-            <option value='DH'>DH</option>
-            <option value='SP'>SP</option>
-            <option value='RP'>RP</option>
-          </select>
+          <div className='drop-menu'>
+            <select className='dropdown purple'>
+              <option value=''>POSITION</option>
+              <option value='C'>C</option>
+              <option value='1B'>1B</option>
+              <option value='2B'>2B</option>
+              <option value='SS'>SS</option>
+              <option value='3B'>3B</option>
+              <option value='CF'>CF</option>
+              <option value='OF'>OF</option>
+              <option value='DH'>DH</option>
+              <option value='SP'>SP</option>
+              <option value='RP'>RP</option>
+            </select>
+          </div>
           <div className='text'><h2>Welcome</h2>To start, select a position above. You can sort by name, closing date, or price, and filter by closing round.</div>
           <div className='text'><h2>Tips</h2>Winning bids will be highlighted:
             <div className='player-row highlight'></div>
