@@ -1,6 +1,15 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
 
+/* TO-DO:
+add media queries to make responsive
+>640px 2 columns
+>800px 2 columns plus sidebar
+Add user photo, team name in title or hamburger for mobile/tablet views
+*/
+
+
+
 html {
   height: 100%;
 }
@@ -53,8 +62,6 @@ h2 {
   font-size: 13px;
   color: black;
 }
-/* Add user photo, team name on right
-or hamburger for mobile/tablet views */
 
 
 
@@ -157,7 +164,7 @@ button img {
 .leftpane {
   background-color: #f5f5f5;
   flex: 1;
-  padding: 24px;
+  padding: 24px 10px 0 10px;
   display: flex;
   flex-direction: column;
 }
@@ -165,7 +172,7 @@ button img {
 .rightpane {
   background-color: rgba(210, 169, 209, 0.5);
   flex: 1;
-  padding: 24px;
+  padding: 24px 10px 0 10px;
   display: flex;
   flex-direction: column;
 }
@@ -192,7 +199,6 @@ button img {
 /* Dropdowns For Positions */
 .drop-menu {
   display: flex;
-  /* flex-direction: row; */
   justify-content: flex-end;
 }
 
@@ -235,9 +241,50 @@ button img {
 
 
 
+/* List of Players */
+.list-title {
+  display: flex;
+  padding: 10px 10px 4px 10px;
+  font-weight: bold;
+  font-size: 12px;
+}
 
+.list-title-name {
+  width: 55%;
+  color: black;
+}
 
-/* add media queries to make responsive
->640px 2 columns
->800px 2 columns plus sidebar
- */
+.list-container {
+  margin: 0;
+  padding: 0;
+}
+
+.list-row {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  margin: 4px 0 0 0;
+  padding: 10px;
+  height: 20px;
+  font-size: 12px;
+}
+
+.list-name {
+  width: 55%;
+  color: darkmagenta;
+}
+
+.list-closes {
+  width: 30%;
+}
+
+.list-price {
+  width: 15%;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.heart {
+
+}
