@@ -273,6 +273,9 @@ button img {
 .list-name {
   width: 55%;
   color: darkmagenta;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 6px;
 }
 
 .list-closes {
@@ -286,5 +289,17 @@ button img {
 }
 
 .heart {
+  background-image: url('./img/favorite-active.svg');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  height: 16px;
+  width: 20%;
+}
 
+.no-heart {
+  background-image: url('./img/favorite-inactive.svg');
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  height: 16px;
+  width: 20%;
 }
