@@ -37,6 +37,7 @@ function PlayerRow (props) {
   )
 }
 
+// onClick <li>, select player object and pass it to PlayerBid as prop
 // Add toggle on click for player.heart, consider separate function
 
 class Positions extends Component {
@@ -53,7 +54,7 @@ class Positions extends Component {
               <option value='R3'>R3</option>
               <option value='R4'>R4</option>
             </select>
-            <select className='dropdown white'>
+            <select className='dropdown grey'>
               <option value=''>SORT BY</option>
               <option value='Name'>Name</option>
               <option value=''>Closing</option>
