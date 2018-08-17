@@ -1,0 +1,31 @@
+type Query {
+  info: String!
+  feed: [Player!]!
+  player(id: ID!): Player
+}
+
+type Mutation {
+  post(
+    name: String!, 
+    team: String!,
+    position: String!,
+    closingtime: Int!,
+    price: [Float!],
+    bidder: [String!],
+    maxbid: [Float!],
+    maxbidder: [String!]): Player!
+  updatePlayer(id: ID!, name: String, team: String): Player
+  deletePlayer(id: ID!): Player
+}
+
+type Player {
+  id: ID!
+  name: String!
+  team: String!
+  position: String!
+  closingtime: Int!
+  price: [Float!]
+  bidder: [String!]
+  maxbid: [Float!]
+  maxbidder: [String!]
+}
