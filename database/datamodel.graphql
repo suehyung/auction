@@ -1,0 +1,12 @@
+type Player {
+  id: ID! @unique
+  createdAt: DateTime!
+  name: String!
+  team: String!
+  position: String!
+  closingtime: Int!
+  price: [Float!]
+  bidder: [String!]
+  maxbid: [Float!]
+  maxbidder: [String!]
+}
