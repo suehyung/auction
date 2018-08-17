@@ -261,10 +261,6 @@ button img {
   margin: 0;
   padding: 0;
   overflow: auto;
-  /* position: absolute;
-  top: 170px;
-  left: 280px; */
-  /* width: 36%; */
 }
 
 .list-row {
@@ -398,8 +394,6 @@ path:hover {
 
 .bidder {
   font-size: 16px;
-  /* font-weight: extra-light;
-  color: lightgrey; */
 }
 
 .bid-form {
