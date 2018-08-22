@@ -1,6 +1,9 @@
 type User {
   id: ID! @unique
-  name: String!
+  team: String!
+  email: String! @unique
+  password: String!
+  watchlist: [Player]
 }
 
 type Player {
