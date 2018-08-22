@@ -17,6 +17,6 @@ type Mutation {
     bidder: [String!],
     maxbid: [Float!],
     maxbidder: [String!]): Player!
-  updatePlayer(id: ID!, name: String, team: String): Player
-  deletePlayer(id: ID!): Player
+  signup(email: String!, password: String!, team: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
 }
