@@ -1,3 +1,8 @@
+type User {
+  id: ID! @unique
+  name: String!
+}
+
 type Player {
   id: ID! @unique
   createdAt: DateTime!
@@ -7,6 +12,7 @@ type Player {
   closingtime: Int!
   price: [Float!]
   bidder: [String!]
+  bidtimestamp: [DateTime!]
   maxbid: [Float!]
   maxbidder: [String!]
 }
