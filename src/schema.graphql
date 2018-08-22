@@ -20,3 +20,15 @@ type Mutation {
   signup(email: String!, password: String!, team: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
 }
+
+type AuthPayload {
+  token: String
+  user: User
+}
+
+type User {
+  id: ID!
+  team: String!
+  email: String!
+  watchlist: [Player]
+}
