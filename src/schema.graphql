@@ -16,7 +16,8 @@ type Mutation {
     price: [Float!],
     bidder: [String!],
     maxbid: [Float!],
-    maxbidder: [String!]): Player!
+    maxbidder: [String!],
+    watchlist: [String!]): Player!
   signup(email: String!, password: String!, team: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
 }
@@ -24,11 +25,4 @@ type Mutation {
 type AuthPayload {
   token: String
   user: User
-}
-
-type User {
-  id: ID!
-  team: String!
-  email: String!
-  watchlist: [Player!]! # Need to fix this and match with resolver
 }
