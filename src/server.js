@@ -15,6 +15,7 @@ const options = { port: 4000 }
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
+  resolverValidationOptions: { requireResolversForResolveType: false },
   context: req => ({
     ...req,
     db: new Prisma({
