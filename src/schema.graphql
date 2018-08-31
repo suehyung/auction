@@ -30,5 +30,5 @@ type User {
   id: ID!
   team: String!
   email: String!
-  watchlist: [Player]
+  watchlist: [Player!]! # Need to fix this and match with resolver
 }

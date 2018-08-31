@@ -54,8 +54,7 @@ function post (parent, args, context, info) {
         price: args.price,
         bidder: args.bidder,
         maxbid: args.maxbid,
-        maxbidder: args.maxbidder,
-        postedBy: { connect: { id: userId } } // Need to adjust or maybe delete this connect mutation. Any use to connect to commissioner? Read up on relational databases
+        maxbidder: args.maxbidder
       }
     }, info
   )
