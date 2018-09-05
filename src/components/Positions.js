@@ -1,44 +1,21 @@
 import React, { Component } from 'react'
 import PlayerBid from './PlayerBid'
+import PlayerRow from './PlayerRow'
 
 // temp player values
 const listOfPlayers = [
-  {name: 'Max Scherzer', heart: false, closes: '12d 13h 36m', price: '$12.40'},
-  {name: 'Madison Bumgarner', heart: false, closes: '12d 13h 36m', price: '$9.40'},
-  {name: 'Clayton Kershaw', heart: false, closes: '12d 13h 36m', price: '$11.80'},
-  {name: 'Shohei Ohtani', heart: false, closes: '12d 13h 36m', price: '$10.60'},
-  {name: 'James Paxton', heart: true, closes: '12d 13h 36m', price: '$10.00'},
-  {name: 'Charlie Morton', heart: true, closes: '12d 13h 36m', price: '$2.40'},
-  {name: 'Noah Syndergaard', heart: false, closes: '12d 13h 36m', price: '$.80'},
-  {name: 'Jake deGrom', heart: false, closes: '15d 13h 36m', price: '$.00'},
-  {name: 'Carlos Carrasco', heart: false, closes: '15d 13h 36m', price: '$10.40'},
-  {name: 'Felix Hernandez', heart: false, closes: '15d 13h 36m', price: '$12.20'},
-  {name: 'German Marquez', heart: false, closes: '15d 13h 36m', price: '$5.00'},
+  {name: 'Max Scherzer', heart: false, closingtime: '12d 13h 36m', price: '$12.40'},
+  {name: 'Madison Bumgarner', heart: false, closingtime: '12d 13h 36m', price: '$9.40'},
+  {name: 'Clayton Kershaw', heart: false, closingtime: '12d 13h 36m', price: '$11.80'},
+  {name: 'Shohei Ohtani', heart: false, closingtime: '12d 13h 36m', price: '$10.60'},
+  {name: 'James Paxton', heart: true, closingtime: '12d 13h 36m', price: '$10.00'},
+  {name: 'Charlie Morton', heart: true, closingtime: '12d 13h 36m', price: '$2.40'},
+  {name: 'Noah Syndergaard', heart: false, closingtime: '12d 13h 36m', price: '$.80'},
+  {name: 'Jake deGrom', heart: false, closingtime: '15d 13h 36m', price: '$.00'},
+  {name: 'Carlos Carrasco', heart: false, closingtime: '15d 13h 36m', price: '$10.40'},
+  {name: 'Felix Hernandez', heart: false, closingtime: '15d 13h 36m', price: '$12.20'},
+  {name: 'German Marquez', heart: false, closingtime: '15d 13h 36m', price: '$5.00'},
 ]
-
-function PlayerRow (props) {
-  return (
-    <ul className='list-container'>
-      {props.players.map(function (player, index) {
-        return (
-          <li className='list-row' key={player.name}>
-            <div className='list-name'>
-              {player.name}
-              {player.heart === true
-                ? <div className='heart'></div>
-                : <div className='no-heart'></div>}  
-            </div>
-            <div className='list-closes'>{player.closes}</div>
-            <div className='list-price'>{player.price}</div>
-          </li>
-        )
-      })}
-    </ul>
-  )
-}
-
-// onClick <li>, select player object and pass it to PlayerBid as prop
-// Add toggle on click for player.heart, consider separate function
 
 class Positions extends Component {
   render () {
