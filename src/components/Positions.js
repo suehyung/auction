@@ -14,7 +14,7 @@ const listOfPlayers = [
   {name: 'Jake deGrom', heart: false, closingtime: '15d 13h 36m', price: '$.00'},
   {name: 'Carlos Carrasco', heart: false, closingtime: '15d 13h 36m', price: '$10.40'},
   {name: 'Felix Hernandez', heart: false, closingtime: '15d 13h 36m', price: '$12.20'},
-  {name: 'German Marquez', heart: false, closingtime: '15d 13h 36m', price: '$5.00'},
+  {name: 'German Marquez', heart: false, closingtime: '15d 13h 36m', price: '$5.00'}
 ]
 
 class Positions extends Component {
