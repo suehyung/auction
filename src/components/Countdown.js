@@ -15,7 +15,7 @@ function Countdown (props) {
   seconds %= 60
 
   return (
-    <div>
+    <div className='list-closes'>
       { days > 0 &&
         <span>{days}d </span>
       }
