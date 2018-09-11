@@ -38,7 +38,7 @@ function Menu () {
         <div className='icon-container'>
           <img src={historyimg} alt='history icon' className='menu-icon'/>
         </div>
-        <NavLink activeClassName='active' to='/history'>History</NavLink>
+        <NavLink activeClassName='active' to='/bidhistory'>History</NavLink>
       </li>
       <li>
         <div className='icon-container'>
