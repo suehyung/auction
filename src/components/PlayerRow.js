@@ -1,6 +1,11 @@
 import React from 'react'
 import Countdown from './Countdown'
 
+function GetPrice (price) {
+  let num = price[price.length - 1]
+  return parseFloat(num).toFixed(2)
+}
+
 function PlayerRow (props) {
   return (
     <ul className='list-container'>
@@ -15,8 +20,10 @@ function PlayerRow (props) {
                 ? <div className='heart'></div>
                 : <div className='no-heart'></div>}
             </div>
-            <Countdown className='list-closes' closingtime = {player.closingtime} />
-            <div className='list-price'>{player.price}</div>
+            <Countdown closingtime = {player.closingtime} />
+            {player.price[0]
+              ? <div className='list-price'>&#36;{GetPrice(player.price)}</div>
+              : <div className='list-price'></div>}
           </li>
         )
       })}
