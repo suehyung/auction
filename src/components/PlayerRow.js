@@ -6,7 +6,9 @@ function PlayerRow (props) {
     <ul className='list-container'>
       {props.players.map(function (player, index) {
         return (
-          <li className='list-row' key={player.name}>
+          <li
+            className='list-row'
+            key={player.name}>
             <div className='list-name'>
               {player.name}
               {player.watchlist === true
