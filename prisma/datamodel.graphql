@@ -3,6 +3,7 @@ type User {
   team: String!
   email: String! @unique
   password: String!
+  watchlist: [Watchlist!]!
 }
 
 type Player {
@@ -17,5 +18,11 @@ type Player {
   bidtimestamp: [DateTime!]
   maxbid: [Float!]
   maxbidder: [String!]
-  watchlist: [User!]!
+  watchlist: [Watchlist!]!
+}
+
+type Watchlist {
+  id: ID! @unique
+  player: Player!
+  user: User!
 }

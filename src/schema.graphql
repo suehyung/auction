@@ -1,5 +1,6 @@
 # import Player from "./generated/prisma.graphql"
 # import User from "./generated/prisma.graphql"
+# import Watchlist from "./generated/prisma.graphql"
 
 type Query {
   info: String!
@@ -20,6 +21,7 @@ type Mutation {
     watchlist: [String!]): Player!
   signup(email: String!, password: String!, team: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
+  watchlist(playerID: ID!): Watchlist
 }
 
 type AuthPayload {

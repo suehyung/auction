@@ -1,11 +1,15 @@
 # source: https://ibl02-auction.herokuapp.com/auction/dev
-# timestamp: Fri Aug 31 2018 19:23:31 GMT-0700 (Pacific Daylight Time)
+# timestamp: Wed Sep 12 2018 18:08:52 GMT-0700 (Pacific Daylight Time)
 
 type AggregatePlayer {
   count: Int!
 }
 
 type AggregateUser {
+  count: Int!
+}
+
+type AggregateWatchlist {
   count: Int!
 }
 
@@ -23,18 +27,24 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createPlayer(data: PlayerCreateInput!): Player!
   createUser(data: UserCreateInput!): User!
-  updatePlayer(data: PlayerUpdateInput!, where: PlayerWhereUniqueInput!): Player
+  createPlayer(data: PlayerCreateInput!): Player!
+  createWatchlist(data: WatchlistCreateInput!): Watchlist!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deletePlayer(where: PlayerWhereUniqueInput!): Player
+  updatePlayer(data: PlayerUpdateInput!, where: PlayerWhereUniqueInput!): Player
+  updateWatchlist(data: WatchlistUpdateInput!, where: WatchlistWhereUniqueInput!): Watchlist
   deleteUser(where: UserWhereUniqueInput!): User
-  upsertPlayer(where: PlayerWhereUniqueInput!, create: PlayerCreateInput!, update: PlayerUpdateInput!): Player!
+  deletePlayer(where: PlayerWhereUniqueInput!): Player
+  deleteWatchlist(where: WatchlistWhereUniqueInput!): Watchlist
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyPlayers(data: PlayerUpdateInput!, where: PlayerWhereInput): BatchPayload!
+  upsertPlayer(where: PlayerWhereUniqueInput!, create: PlayerCreateInput!, update: PlayerUpdateInput!): Player!
+  upsertWatchlist(where: WatchlistWhereUniqueInput!, create: WatchlistCreateInput!, update: WatchlistUpdateInput!): Watchlist!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
-  deleteManyPlayers(where: PlayerWhereInput): BatchPayload!
+  updateManyPlayers(data: PlayerUpdateInput!, where: PlayerWhereInput): BatchPayload!
+  updateManyWatchlists(data: WatchlistUpdateInput!, where: WatchlistWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyPlayers(where: PlayerWhereInput): BatchPayload!
+  deleteManyWatchlists(where: WatchlistWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -76,7 +86,7 @@ type Player implements Node {
   bidtimestamp: [DateTime!]!
   maxbid: [Float!]!
   maxbidder: [String!]!
-  watchlist(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  watchlist(where: WatchlistWhereInput, orderBy: WatchlistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Watchlist!]
 }
 
 """A connection to a list of items."""
@@ -107,7 +117,7 @@ input PlayerCreateInput {
   bidtimestamp: PlayerCreatebidtimestampInput
   maxbid: PlayerCreatemaxbidInput
   maxbidder: PlayerCreatemaxbidderInput
-  watchlist: UserCreateManyInput
+  watchlist: WatchlistCreateManyWithoutPlayerInput
 }
 
 input PlayerCreatemaxbidderInput {
@@ -118,8 +128,25 @@ input PlayerCreatemaxbidInput {
   set: [Float!]
 }
 
+input PlayerCreateOneWithoutWatchlistInput {
+  create: PlayerCreateWithoutWatchlistInput
+  connect: PlayerWhereUniqueInput
+}
+
 input PlayerCreatepriceInput {
   set: [Float!]
+}
+
+input PlayerCreateWithoutWatchlistInput {
+  name: String!
+  team: String!
+  position: String!
+  closingtime: Int!
+  price: PlayerCreatepriceInput
+  bidder: PlayerCreatebidderInput
+  bidtimestamp: PlayerCreatebidtimestampInput
+  maxbid: PlayerCreatemaxbidInput
+  maxbidder: PlayerCreatemaxbidderInput
 }
 
 """An edge in a connection."""
@@ -219,7 +246,7 @@ input PlayerUpdateInput {
   bidtimestamp: PlayerUpdatebidtimestampInput
   maxbid: PlayerUpdatemaxbidInput
   maxbidder: PlayerUpdatemaxbidderInput
-  watchlist: UserUpdateManyInput
+  watchlist: WatchlistUpdateManyWithoutPlayerInput
 }
 
 input PlayerUpdatemaxbidderInput {
@@ -230,8 +257,33 @@ input PlayerUpdatemaxbidInput {
   set: [Float!]
 }
 
+input PlayerUpdateOneWithoutWatchlistInput {
+  create: PlayerCreateWithoutWatchlistInput
+  connect: PlayerWhereUniqueInput
+  delete: Boolean
+  update: PlayerUpdateWithoutWatchlistDataInput
+  upsert: PlayerUpsertWithoutWatchlistInput
+}
+
 input PlayerUpdatepriceInput {
   set: [Float!]
+}
+
+input PlayerUpdateWithoutWatchlistDataInput {
+  name: String
+  team: String
+  position: String
+  closingtime: Int
+  price: PlayerUpdatepriceInput
+  bidder: PlayerUpdatebidderInput
+  bidtimestamp: PlayerUpdatebidtimestampInput
+  maxbid: PlayerUpdatemaxbidInput
+  maxbidder: PlayerUpdatemaxbidderInput
+}
+
+input PlayerUpsertWithoutWatchlistInput {
+  update: PlayerUpdateWithoutWatchlistDataInput!
+  create: PlayerCreateWithoutWatchlistInput!
 }
 
 input PlayerWhereInput {
@@ -447,9 +499,9 @@ input PlayerWhereInput {
 
   """All values greater than or equal the given value."""
   closingtime_gte: Int
-  watchlist_every: UserWhereInput
-  watchlist_some: UserWhereInput
-  watchlist_none: UserWhereInput
+  watchlist_every: WatchlistWhereInput
+  watchlist_some: WatchlistWhereInput
+  watchlist_none: WatchlistWhereInput
 }
 
 input PlayerWhereUniqueInput {
@@ -457,12 +509,15 @@ input PlayerWhereUniqueInput {
 }
 
 type Query {
-  players(where: PlayerWhereInput, orderBy: PlayerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Player]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  player(where: PlayerWhereUniqueInput!): Player
+  players(where: PlayerWhereInput, orderBy: PlayerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Player]!
+  watchlists(where: WatchlistWhereInput, orderBy: WatchlistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Watchlist]!
   user(where: UserWhereUniqueInput!): User
-  playersConnection(where: PlayerWhereInput, orderBy: PlayerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayerConnection!
+  player(where: PlayerWhereUniqueInput!): Player
+  watchlist(where: WatchlistWhereUniqueInput!): Watchlist
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  playersConnection(where: PlayerWhereInput, orderBy: PlayerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayerConnection!
+  watchlistsConnection(where: WatchlistWhereInput, orderBy: WatchlistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WatchlistConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -472,8 +527,9 @@ type Query {
 }
 
 type Subscription {
-  player(where: PlayerSubscriptionWhereInput): PlayerSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  player(where: PlayerSubscriptionWhereInput): PlayerSubscriptionPayload
+  watchlist(where: WatchlistSubscriptionWhereInput): WatchlistSubscriptionPayload
 }
 
 type User implements Node {
@@ -481,6 +537,7 @@ type User implements Node {
   team: String!
   email: String!
   password: String!
+  watchlist(where: WatchlistWhereInput, orderBy: WatchlistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Watchlist!]
 }
 
 """A connection to a list of items."""
@@ -497,11 +554,18 @@ input UserCreateInput {
   team: String!
   email: String!
   password: String!
+  watchlist: WatchlistCreateManyWithoutUserInput
 }
 
-input UserCreateManyInput {
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
+input UserCreateOneWithoutWatchlistInput {
+  create: UserCreateWithoutWatchlistInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutWatchlistInput {
+  team: String!
+  email: String!
+  password: String!
 }
 
 """An edge in a connection."""
@@ -574,36 +638,30 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
-input UserUpdateDataInput {
-  team: String
-  email: String
-  password: String
-}
-
 input UserUpdateInput {
   team: String
   email: String
   password: String
+  watchlist: WatchlistUpdateManyWithoutUserInput
 }
 
-input UserUpdateManyInput {
-  create: [UserCreateInput!]
-  connect: [UserWhereUniqueInput!]
-  disconnect: [UserWhereUniqueInput!]
-  delete: [UserWhereUniqueInput!]
-  update: [UserUpdateWithWhereUniqueNestedInput!]
-  upsert: [UserUpsertWithWhereUniqueNestedInput!]
+input UserUpdateOneWithoutWatchlistInput {
+  create: UserCreateWithoutWatchlistInput
+  connect: UserWhereUniqueInput
+  delete: Boolean
+  update: UserUpdateWithoutWatchlistDataInput
+  upsert: UserUpsertWithoutWatchlistInput
 }
 
-input UserUpdateWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput!
-  data: UserUpdateDataInput!
+input UserUpdateWithoutWatchlistDataInput {
+  team: String
+  email: String
+  password: String
 }
 
-input UserUpsertWithWhereUniqueNestedInput {
-  where: UserWhereUniqueInput!
-  update: UserUpdateDataInput!
-  create: UserCreateInput!
+input UserUpsertWithoutWatchlistInput {
+  update: UserUpdateWithoutWatchlistDataInput!
+  create: UserCreateWithoutWatchlistInput!
 }
 
 input UserWhereInput {
@@ -775,12 +833,222 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   password_not_ends_with: String
-  _MagicalBackRelation_PlayerToUser_every: PlayerWhereInput
-  _MagicalBackRelation_PlayerToUser_some: PlayerWhereInput
-  _MagicalBackRelation_PlayerToUser_none: PlayerWhereInput
+  watchlist_every: WatchlistWhereInput
+  watchlist_some: WatchlistWhereInput
+  watchlist_none: WatchlistWhereInput
 }
 
 input UserWhereUniqueInput {
   id: ID
   email: String
+}
+
+type Watchlist implements Node {
+  id: ID!
+  player(where: PlayerWhereInput): Player!
+  user(where: UserWhereInput): User!
+}
+
+"""A connection to a list of items."""
+type WatchlistConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [WatchlistEdge]!
+  aggregate: AggregateWatchlist!
+}
+
+input WatchlistCreateInput {
+  player: PlayerCreateOneWithoutWatchlistInput!
+  user: UserCreateOneWithoutWatchlistInput!
+}
+
+input WatchlistCreateManyWithoutPlayerInput {
+  create: [WatchlistCreateWithoutPlayerInput!]
+  connect: [WatchlistWhereUniqueInput!]
+}
+
+input WatchlistCreateManyWithoutUserInput {
+  create: [WatchlistCreateWithoutUserInput!]
+  connect: [WatchlistWhereUniqueInput!]
+}
+
+input WatchlistCreateWithoutPlayerInput {
+  user: UserCreateOneWithoutWatchlistInput!
+}
+
+input WatchlistCreateWithoutUserInput {
+  player: PlayerCreateOneWithoutWatchlistInput!
+}
+
+"""An edge in a connection."""
+type WatchlistEdge {
+  """The item at the end of the edge."""
+  node: Watchlist!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum WatchlistOrderByInput {
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type WatchlistPreviousValues {
+  id: ID!
+}
+
+type WatchlistSubscriptionPayload {
+  mutation: MutationType!
+  node: Watchlist
+  updatedFields: [String!]
+  previousValues: WatchlistPreviousValues
+}
+
+input WatchlistSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WatchlistSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WatchlistSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WatchlistSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: WatchlistWhereInput
+}
+
+input WatchlistUpdateInput {
+  player: PlayerUpdateOneWithoutWatchlistInput
+  user: UserUpdateOneWithoutWatchlistInput
+}
+
+input WatchlistUpdateManyWithoutPlayerInput {
+  create: [WatchlistCreateWithoutPlayerInput!]
+  connect: [WatchlistWhereUniqueInput!]
+  disconnect: [WatchlistWhereUniqueInput!]
+  delete: [WatchlistWhereUniqueInput!]
+  update: [WatchlistUpdateWithWhereUniqueWithoutPlayerInput!]
+  upsert: [WatchlistUpsertWithWhereUniqueWithoutPlayerInput!]
+}
+
+input WatchlistUpdateManyWithoutUserInput {
+  create: [WatchlistCreateWithoutUserInput!]
+  connect: [WatchlistWhereUniqueInput!]
+  disconnect: [WatchlistWhereUniqueInput!]
+  delete: [WatchlistWhereUniqueInput!]
+  update: [WatchlistUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [WatchlistUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input WatchlistUpdateWithoutPlayerDataInput {
+  user: UserUpdateOneWithoutWatchlistInput
+}
+
+input WatchlistUpdateWithoutUserDataInput {
+  player: PlayerUpdateOneWithoutWatchlistInput
+}
+
+input WatchlistUpdateWithWhereUniqueWithoutPlayerInput {
+  where: WatchlistWhereUniqueInput!
+  data: WatchlistUpdateWithoutPlayerDataInput!
+}
+
+input WatchlistUpdateWithWhereUniqueWithoutUserInput {
+  where: WatchlistWhereUniqueInput!
+  data: WatchlistUpdateWithoutUserDataInput!
+}
+
+input WatchlistUpsertWithWhereUniqueWithoutPlayerInput {
+  where: WatchlistWhereUniqueInput!
+  update: WatchlistUpdateWithoutPlayerDataInput!
+  create: WatchlistCreateWithoutPlayerInput!
+}
+
+input WatchlistUpsertWithWhereUniqueWithoutUserInput {
+  where: WatchlistWhereUniqueInput!
+  update: WatchlistUpdateWithoutUserDataInput!
+  create: WatchlistCreateWithoutUserInput!
+}
+
+input WatchlistWhereInput {
+  """Logical AND on all given filters."""
+  AND: [WatchlistWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [WatchlistWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [WatchlistWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  player: PlayerWhereInput
+  user: UserWhereInput
+}
+
+input WatchlistWhereUniqueInput {
+  id: ID
 }

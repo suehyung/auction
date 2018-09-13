@@ -3,17 +3,14 @@ const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
 
 async function signup (parent, args, context, info) {
-  // 1
   const password = await bcrypt.hash(args.password, 10)
-  // 2
+
   const user = await context.db.mutation.createUser({
     data: { ...args, password }
   }, `{ id }`)
 
-  // 3
   const token = jwt.sign({ userId: user.id }, APP_SECRET)
 
-  // 4
   return {
     token,
     user
@@ -21,13 +18,11 @@ async function signup (parent, args, context, info) {
 }
 
 async function login (parent, args, context, info) {
-  // 1
   const user = await context.db.query.user({ where: { email: args.email } }, ` { id password } `)
   if (!user) {
     throw new Error('No such user found')
   }
 
-  // 2
   const valid = await bcrypt.compare(args.password, user.password)
   if (!valid) {
     throw new Error('Invalid password')
@@ -35,11 +30,34 @@ async function login (parent, args, context, info) {
 
   const token = jwt.sign({ userId: user.id }, APP_SECRET)
 
-  // 3
   return {
     token,
     user
   }
+}
+
+async function watchlist (parent, args, context, info) {
+  const userId = getUserId(context)
+  
+  const playerExists = await context.db.exists.Watchlist({
+    user: { id: userId },
+    player: { id: args.playerId }
+  })
+
+  // Make this unfollow the player, just mirror deleteWatchlist below?
+  if (playerExists) {
+    throw new Error(`Already following: ${args.playerId}`)
+  }
+
+  return context.db.mutation.createWatchlist(
+    {
+      data: {
+        user: { connect: { id: userId } },
+        player: { connect: { id: args.playerId } }
+      }
+    },
+    info
+  )
 }
 
 function post (parent, args, context, info) {
@@ -63,5 +81,6 @@ function post (parent, args, context, info) {
 module.exports = {
   signup,
   login,
+  watchlist,
   post
 }
