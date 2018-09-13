@@ -1,7 +1,7 @@
 import React from 'react'
 import Countdown from './Countdown'
 
-function GetPrice (price) {
+function FormatPrice (price) {
   let num = price[price.length - 1]
   return parseFloat(num).toFixed(2)
 }
@@ -22,7 +22,7 @@ function PlayerRow (props) {
             </div>
             <Countdown closingtime = {player.closingtime} />
             {player.price[0]
-              ? <div className='list-price'>&#36;{GetPrice(player.price)}</div>
+              ? <div className='list-price'>&#36;{FormatPrice(player.price)}</div>
               : <div className='list-price'></div>}
           </li>
         )
