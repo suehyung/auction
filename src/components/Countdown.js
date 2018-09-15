@@ -1,35 +1,56 @@
 import React from 'react'
 
-function Countdown (props) {
-  let givenDate = new Date()
-  givenDate.setTime(props.closingtime * 1000)
-  let now = new Date()
-  let difference = givenDate.getTime() - now.getTime()
-  let seconds = Math.floor(difference / 1000)
-  let minutes = Math.floor(seconds / 60)
-  let hours = Math.floor(minutes / 60)
-  let days = Math.floor(hours / 24)
+class Countdown extends React.Component {
+  constructor (props) {
+    super(props)
+    this.state = {date: new Date()}
+  }
 
-  hours %= 24
-  minutes %= 60
-  seconds %= 60
+  componentDidMount () {
+    this.timerID = setInterval(
+      () => this.tick(),
+      60000
+    )
+  }
 
-  return (
-    <div className='list-closes'>
-      { days > 0 &&
-        <span>{days}d </span>
-      }
-      { hours > 0 &&
-        <span>{hours}h </span>
-      }
-      { minutes >= 1 && 
-        <span>{minutes}m</span>
-      }
-      { difference < 60000 &&
-        <span>&lt;1m</span>
-      }
-    </div>
-  )
+  componentWillUnmount () {
+    clearInterval(this.timerID)
+  }
+
+  tick () {
+    this.setState({ date: new Date() })
+  }
+
+  render () {
+    let givenDate = new Date()
+    givenDate.setTime(this.props.closingtime * 1000)
+    let difference = givenDate.getTime() - this.state.date.getTime()
+    let seconds = Math.floor(difference / 1000)
+    let minutes = Math.floor(seconds / 60)
+    let hours = Math.floor(minutes / 60)
+    let days = Math.floor(hours / 24)
+
+    hours %= 24
+    minutes %= 60
+    seconds %= 60
+
+    return (
+      <div className='list-closes'>
+        { days > 0 &&
+          <span>{days}d </span>
+        }
+        { hours > 0 &&
+          <span>{hours}h </span>
+        }
+        { minutes >= 1 && 
+          <span>{minutes}m</span>
+        }
+        { difference < 60000 &&
+          <span>&lt;1m</span>
+        }
+      </div>
+    )
+  }
 }
 
 export default Countdown
