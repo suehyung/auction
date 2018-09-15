@@ -8,7 +8,6 @@ import Menu from './Menu'
 import Nav from './Nav'
 import Positions from './Positions'
 import Watchlist from './Watchlist'
-import PlayerBid from './PlayerBid'
 
 class App extends Component {
   render () {
@@ -18,22 +17,17 @@ class App extends Component {
           <Nav />
           <div className='body-container'>
             <Menu />
-            <div className='main-container'>
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <Route path='/positions' component={Positions} />
-                <Route path='/watchlist' component={Watchlist} />
-                <Route path='/bidhistory' component={BidHistory} />
-                <Route path='/account' component={Account} />
-                <Route path='/login' component={Login} />
-                <Route render={function () {
-                  return <p>Page Not Found</p>
-                }} />
-              </Switch>
-              <div className='rightpane'>
-                <PlayerBid />
-              </div>
-            </div>
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route path='/positions' component={Positions} />
+              <Route path='/watchlist' component={Watchlist} />
+              <Route path='/bidhistory' component={BidHistory} />
+              <Route path='/account' component={Account} />
+              <Route path='/login' component={Login} />
+              <Route render={function () {
+                return <p>Page Not Found</p>
+              }} />
+            </Switch>
           </div>
         </div>
       </Router>

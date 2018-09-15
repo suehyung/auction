@@ -3,8 +3,11 @@ import React, { Component } from 'react'
 class Account extends Component {
   render () {
     return (
-      <div className='leftpane'>
-        Account here
+      <div className='main-container'>
+        <div className='leftpane'>
+          Account here
+        </div>
+        <div className='rightpane'> </div>
       </div>
     )
   }
