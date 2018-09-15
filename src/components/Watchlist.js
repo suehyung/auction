@@ -21,12 +21,12 @@ const Watchlist = () => (
     {({ error, loading, data }) => {
       if (error) return (
         <div className='leftpane'>
-          `💩 Oops! ${error.message}`
+          `Oops! ${error.message}`
         </div>
       )
       if (loading) return (
         <div className='leftpane'>
-          'Patience young grasshopper...'
+          Patience young grasshopper...
         </div>
       )
 
@@ -73,15 +73,5 @@ const Watchlist = () => (
     }}
   </Query>
 )
-
-// class Watchlist extends Component {
-//   render () {
-//     return (
-//       <div className='watchlist'>
-//         Watchlist here
-//       </div>
-//     )
-//   }
-// }
 
 export default Watchlist
