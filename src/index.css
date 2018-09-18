@@ -282,6 +282,11 @@ button img {
   padding-right: 6px;
 }
 
+.list-name:hover {
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .list-heart {
   width: 15%;
 }
