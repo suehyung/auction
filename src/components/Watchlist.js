@@ -81,7 +81,9 @@ class Watchlist extends Component {
                 {/* Consider filter by watchlist, then if position not blank, then show title and PlayerRow */}
               </div>
               <div className='rightpane'>
-                <PlayerBid selectedPlayer = {this.state.selectedPlayer} />
+                <PlayerBid
+                  onSelect = {this.updatePlayer}
+                  selectedPlayer = {this.state.selectedPlayer} />
               </div>
             </div>
           )
