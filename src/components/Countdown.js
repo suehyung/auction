@@ -35,7 +35,7 @@ class Countdown extends React.Component {
     seconds %= 60
 
     return (
-      <div className='list-closes'>
+      <div>
         { days > 0 &&
           <span>{days}d </span>
         }
