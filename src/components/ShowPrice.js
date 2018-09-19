@@ -7,7 +7,7 @@ function FormatPrice (price) {
 
 function ShowPrice (props) {
   return (
-    props.price
+    props.price[0]
       ? <div>&#36;{FormatPrice(props.price)}</div>
       : <div></div>
   )
@@ -15,4 +15,4 @@ function ShowPrice (props) {
 
 export default ShowPrice
 
-// add interval like Countdown to update prices
+// add interval to update prices or GraphQL subscription?
