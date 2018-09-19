@@ -21,7 +21,7 @@ function PlayerBid (props) {
           <div className='player-team bold'>{props.selectedPlayer.position}</div>
         </div>
         <div className='darkpurple box'>
-          <div className='closing-time'>
+          <div className='closing-time'>Closes in&nbsp;
             <Countdown closingtime = {props.selectedPlayer.closingtime} />
           </div>
           (or 1m after last bid)
