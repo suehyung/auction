@@ -1,5 +1,5 @@
 # source: https://ibl02-auction.herokuapp.com/auction/dev
-# timestamp: Wed Sep 12 2018 18:08:52 GMT-0700 (Pacific Daylight Time)
+# timestamp: Mon Sep 17 2018 22:49:55 GMT-0700 (Pacific Daylight Time)
 
 type AggregatePlayer {
   count: Int!
@@ -27,24 +27,24 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createUser(data: UserCreateInput!): User!
   createPlayer(data: PlayerCreateInput!): Player!
   createWatchlist(data: WatchlistCreateInput!): Watchlist!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  createUser(data: UserCreateInput!): User!
   updatePlayer(data: PlayerUpdateInput!, where: PlayerWhereUniqueInput!): Player
   updateWatchlist(data: WatchlistUpdateInput!, where: WatchlistWhereUniqueInput!): Watchlist
-  deleteUser(where: UserWhereUniqueInput!): User
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   deletePlayer(where: PlayerWhereUniqueInput!): Player
   deleteWatchlist(where: WatchlistWhereUniqueInput!): Watchlist
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
   upsertPlayer(where: PlayerWhereUniqueInput!, create: PlayerCreateInput!, update: PlayerUpdateInput!): Player!
   upsertWatchlist(where: WatchlistWhereUniqueInput!, create: WatchlistCreateInput!, update: WatchlistUpdateInput!): Watchlist!
-  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyPlayers(data: PlayerUpdateInput!, where: PlayerWhereInput): BatchPayload!
   updateManyWatchlists(data: WatchlistUpdateInput!, where: WatchlistWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   deleteManyPlayers(where: PlayerWhereInput): BatchPayload!
   deleteManyWatchlists(where: WatchlistWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -85,7 +85,7 @@ type Player implements Node {
   bidder: [String!]!
   bidtimestamp: [DateTime!]!
   maxbid: [Float!]!
-  maxbidder: [String!]!
+  maxbidder(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
   watchlist(where: WatchlistWhereInput, orderBy: WatchlistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Watchlist!]
 }
 
@@ -116,12 +116,8 @@ input PlayerCreateInput {
   bidder: PlayerCreatebidderInput
   bidtimestamp: PlayerCreatebidtimestampInput
   maxbid: PlayerCreatemaxbidInput
-  maxbidder: PlayerCreatemaxbidderInput
+  maxbidder: UserCreateManyInput
   watchlist: WatchlistCreateManyWithoutPlayerInput
-}
-
-input PlayerCreatemaxbidderInput {
-  set: [String!]
 }
 
 input PlayerCreatemaxbidInput {
@@ -146,7 +142,7 @@ input PlayerCreateWithoutWatchlistInput {
   bidder: PlayerCreatebidderInput
   bidtimestamp: PlayerCreatebidtimestampInput
   maxbid: PlayerCreatemaxbidInput
-  maxbidder: PlayerCreatemaxbidderInput
+  maxbidder: UserCreateManyInput
 }
 
 """An edge in a connection."""
@@ -186,7 +182,6 @@ type PlayerPreviousValues {
   bidder: [String!]!
   bidtimestamp: [DateTime!]!
   maxbid: [Float!]!
-  maxbidder: [String!]!
 }
 
 type PlayerSubscriptionPayload {
@@ -245,12 +240,8 @@ input PlayerUpdateInput {
   bidder: PlayerUpdatebidderInput
   bidtimestamp: PlayerUpdatebidtimestampInput
   maxbid: PlayerUpdatemaxbidInput
-  maxbidder: PlayerUpdatemaxbidderInput
+  maxbidder: UserUpdateManyInput
   watchlist: WatchlistUpdateManyWithoutPlayerInput
-}
-
-input PlayerUpdatemaxbidderInput {
-  set: [String!]
 }
 
 input PlayerUpdatemaxbidInput {
@@ -278,7 +269,7 @@ input PlayerUpdateWithoutWatchlistDataInput {
   bidder: PlayerUpdatebidderInput
   bidtimestamp: PlayerUpdatebidtimestampInput
   maxbid: PlayerUpdatemaxbidInput
-  maxbidder: PlayerUpdatemaxbidderInput
+  maxbidder: UserUpdateManyInput
 }
 
 input PlayerUpsertWithoutWatchlistInput {
@@ -499,6 +490,9 @@ input PlayerWhereInput {
 
   """All values greater than or equal the given value."""
   closingtime_gte: Int
+  maxbidder_every: UserWhereInput
+  maxbidder_some: UserWhereInput
+  maxbidder_none: UserWhereInput
   watchlist_every: WatchlistWhereInput
   watchlist_some: WatchlistWhereInput
   watchlist_none: WatchlistWhereInput
@@ -509,15 +503,15 @@ input PlayerWhereUniqueInput {
 }
 
 type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   players(where: PlayerWhereInput, orderBy: PlayerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Player]!
   watchlists(where: WatchlistWhereInput, orderBy: WatchlistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Watchlist]!
-  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   player(where: PlayerWhereUniqueInput!): Player
   watchlist(where: WatchlistWhereUniqueInput!): Watchlist
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  user(where: UserWhereUniqueInput!): User
   playersConnection(where: PlayerWhereInput, orderBy: PlayerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PlayerConnection!
   watchlistsConnection(where: WatchlistWhereInput, orderBy: WatchlistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): WatchlistConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -527,9 +521,9 @@ type Query {
 }
 
 type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   player(where: PlayerSubscriptionWhereInput): PlayerSubscriptionPayload
   watchlist(where: WatchlistSubscriptionWhereInput): WatchlistSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User implements Node {
@@ -555,6 +549,11 @@ input UserCreateInput {
   email: String!
   password: String!
   watchlist: WatchlistCreateManyWithoutUserInput
+}
+
+input UserCreateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
 }
 
 input UserCreateOneWithoutWatchlistInput {
@@ -638,11 +637,27 @@ input UserSubscriptionWhereInput {
   node: UserWhereInput
 }
 
+input UserUpdateDataInput {
+  team: String
+  email: String
+  password: String
+  watchlist: WatchlistUpdateManyWithoutUserInput
+}
+
 input UserUpdateInput {
   team: String
   email: String
   password: String
   watchlist: WatchlistUpdateManyWithoutUserInput
+}
+
+input UserUpdateManyInput {
+  create: [UserCreateInput!]
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  delete: [UserWhereUniqueInput!]
+  update: [UserUpdateWithWhereUniqueNestedInput!]
+  upsert: [UserUpsertWithWhereUniqueNestedInput!]
 }
 
 input UserUpdateOneWithoutWatchlistInput {
@@ -659,9 +674,20 @@ input UserUpdateWithoutWatchlistDataInput {
   password: String
 }
 
+input UserUpdateWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  data: UserUpdateDataInput!
+}
+
 input UserUpsertWithoutWatchlistInput {
   update: UserUpdateWithoutWatchlistDataInput!
   create: UserCreateWithoutWatchlistInput!
+}
+
+input UserUpsertWithWhereUniqueNestedInput {
+  where: UserWhereUniqueInput!
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
 }
 
 input UserWhereInput {
@@ -836,6 +862,9 @@ input UserWhereInput {
   watchlist_every: WatchlistWhereInput
   watchlist_some: WatchlistWhereInput
   watchlist_none: WatchlistWhereInput
+  _MagicalBackRelation_PlayerToUser_every: PlayerWhereInput
+  _MagicalBackRelation_PlayerToUser_some: PlayerWhereInput
+  _MagicalBackRelation_PlayerToUser_none: PlayerWhereInput
 }
 
 input UserWhereUniqueInput {

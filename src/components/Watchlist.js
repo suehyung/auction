@@ -4,6 +4,7 @@ import { gql } from 'apollo-boost'
 import PlayerRow from './PlayerRow'
 import PlayerBid from './PlayerBid'
 
+// change this to feed after authorization? also data.feed
 const PLAYERS_LIST = gql`
   {
     players {
@@ -13,6 +14,21 @@ const PLAYERS_LIST = gql`
       position
       closingtime
       price
+      maxbidder {team}
+    }
+  }
+`
+
+const CLOSINGTIME_DESC = gql`
+  {
+    players(orderBy: closingtime_DESC) {
+      id
+      name
+      team
+      position
+      closingtime
+      price
+      maxbidder {team}
     }
   }
 `

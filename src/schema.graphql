@@ -1,10 +1,8 @@
-# import Player from "./generated/prisma.graphql"
-# import User from "./generated/prisma.graphql"
-# import Watchlist from "./generated/prisma.graphql"
+# import Player, User, Watchlist, PlayerOrderByInput from "./generated/prisma.graphql"
 
 type Query {
   info: String!
-  feed: [Player!]!
+  feed(filter: String, orderBy: PlayerOrderByInput): [Player!]!
   player(id: ID!): Player
 }
 
