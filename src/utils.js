@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const APP_SECRET = 'GraphQL-is-aw3some'
+const AUTH_TOKEN = 'auth-token'
 
 function getUserId (context) {
   const Authorization = context.request.get('Authorization')
@@ -14,5 +15,6 @@ function getUserId (context) {
 
 module.exports = {
   APP_SECRET,
-  getUserId
+  getUserId,
+  AUTH_TOKEN
 }
