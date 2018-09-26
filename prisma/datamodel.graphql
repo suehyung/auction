@@ -17,7 +17,7 @@ type Player {
   bidder: [String!]
   bidtimestamp: [DateTime!]
   maxbid: [Float!]
-  maxbidder: [String!]
+  maxbidder: [User!]!
   watchlist: [Watchlist!]!
 }
 
