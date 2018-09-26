@@ -38,7 +38,7 @@ async function login (parent, args, context, info) {
 
 async function watchlist (parent, args, context, info) {
   const userId = getUserId(context)
-  
+
   const playerExists = await context.db.exists.Watchlist({
     user: { id: userId },
     player: { id: args.playerId }
