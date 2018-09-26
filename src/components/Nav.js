@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import { AUTH_TOKEN } from '../constants'
+import { AUTH_TOKEN } from '../utils'
 
 class Nav extends Component {
   render () {
