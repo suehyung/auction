@@ -4,7 +4,6 @@ import { gql } from 'apollo-boost'
 import PlayerRow from './PlayerRow'
 import PlayerBid from './PlayerBid'
 
-// change this to feed after authorization? also data.feed
 const PLAYERS_LIST = gql`
   {
     players {
