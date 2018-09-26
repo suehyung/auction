@@ -45,6 +45,8 @@ h2 {
 /* Title Bar */
 .title-container {
   height: 45px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .title {
@@ -59,6 +61,22 @@ h2 {
 
 .title-dark {
   font-size: 13px;
+  color: black;
+}
+
+.title-login {
+  padding: 8px 24px 8px 0;
+}
+
+.title-login a {
+  text-decoration: none;
+}
+
+.title-login a:hover {
+  color: grey;
+}
+
+.title-login a:active {
   color: black;
 }
 
@@ -197,6 +215,20 @@ button img {
   margin-left: 20px;
   margin-right: 20px;
 }
+
+.button {
+  font-family: Montserrat;
+  font-size: 14px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #B719B0;
+  color: white;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
 
 
 /* Dropdowns For Positions */
@@ -450,17 +482,34 @@ input::placeholder {
 }
 
 .bid-button {
-  font-family: Montserrat;
-  font-size: 14px;
   height: 40px;
   width: 150px;
-  padding: 10px;
-  border: 0;
-  border-radius: 10px;
-  background-color: #B719B0;
-  color: white;
 }
 
-.bid-button:hover {
-  cursor: pointer;
+
+
+/* Styles for Login Page */
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-input {
+  width: 75%;
+  height: 20px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  margin-bottom: 4px;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.login-button {
+  height: 40px;
+  width: 150px;
+  text-align: center;
+  line-height: 40px;
+  margin-top: 4px;
 }

@@ -43,7 +43,7 @@ function PlayerBid (props) {
               id='enter-bid'
               placeholder='.40'/>
           </div>
-          <input type='submit' value='PLACE BID' className='bid-button' />
+          <input type='submit' value='PLACE BID' className='button bid-button' />
         </form>
       </div>
       : <div className='bid-container'></div>
