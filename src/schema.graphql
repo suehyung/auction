@@ -2,8 +2,10 @@
 
 type Query {
   info: String!
-  feed(filter: String, orderBy: PlayerOrderByInput): [Player!]!
+  players(filter: String, orderBy: PlayerOrderByInput): [Player!]!
+  users(filter: String, orderBy: UserOrderByInput): [User!]!
   player(id: ID!): Player
+  user(id: ID!): User
 }
 
 type Mutation {

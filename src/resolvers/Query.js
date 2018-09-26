@@ -1,4 +1,4 @@
-function feed (parent, args, context, info) {
+function players (parent, args, context, info) {
   const where = args.filter
     ? {
       OR: [
@@ -11,4 +11,17 @@ function feed (parent, args, context, info) {
   return context.db.query.players({ where, orderBy: args.orderBy }, info)
 }
 
-module.exports = { feed }
+function users (parent, args, context, info) {
+  const where = args.filter
+    ? {
+      OR: [
+        { team_contains: args.filter },
+        { email_contains: args.filter }
+      ]
+    }
+    : {}
+
+  return context.db.query.users({ where, orderBy: args.orderBy }, info)
+}
+
+module.exports = { players, users }
