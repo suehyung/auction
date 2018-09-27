@@ -17,7 +17,7 @@ class Nav extends Component {
             <div
               onClick={() => {
                 localStorage.removeItem(AUTH_TOKEN)
-                this.props.history.push('/')
+                this.props.history.push(`/`)
               }}
             >
               Logout

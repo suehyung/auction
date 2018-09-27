@@ -19,7 +19,7 @@ const authLink = setContext((_, { headers }) => {
 })
 
 const httpLink = new HttpLink({
-  uri: 'https://ibl02-auction.herokuapp.com/auction/dev'
+  uri: 'http://localhost:4000'
 })
 
 const client = new ApolloClient({
