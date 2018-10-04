@@ -14,6 +14,7 @@ const PLAYERS_LIST = gql`
       closingtime
       price
       maxbidder {team}
+      watchlist {user{team}}
     }
   }
 `
@@ -28,6 +29,7 @@ const CLOSINGTIME_DESC = gql`
       closingtime
       price
       maxbidder {team}
+      watchlist {user{team}}
     }
   }
 `

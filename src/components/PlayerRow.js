@@ -2,10 +2,20 @@ import React from 'react'
 import Countdown from './Countdown'
 import PropTypes from 'prop-types'
 import ShowPrice from './ShowPrice'
+import { getUser } from './User'
 
 PlayerRow.propTypes = {
   players: PropTypes.array.isRequired,
   onSelect: PropTypes.func.isRequired
+}
+
+// Add toggle on click function to add/remove watchlist array element
+function CheckWatchlist (props) {
+  return (
+    props.user.find(user => user.user.id === getUser())
+      ? <div className='heart'></div>
+      : <div className='no-heart'></div>
+  )
 }
 
 function PlayerRow (props) {
@@ -21,9 +31,7 @@ function PlayerRow (props) {
               {player.name}
             </div>
             <div className='list-heart'>
-              {player.watchlist === true
-                ? <div className='heart'></div>
-                : <div className='no-heart'></div>}
+              <CheckWatchlist user = {player.watchlist} />
             </div>
             <div className='list-closes'>
               <Countdown closingtime = {player.closingtime} />
@@ -37,7 +45,5 @@ function PlayerRow (props) {
     </ul>
   )
 }
-
-// Add toggle on click for player.heart, consider separate function
 
 export default PlayerRow
