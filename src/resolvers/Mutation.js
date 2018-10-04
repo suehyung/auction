@@ -44,9 +44,17 @@ async function watchlist (parent, args, context, info) {
     player: { id: args.playerId }
   })
 
-  // Make this unfollow the player, just mirror deleteWatchlist below?
   if (playerExists) {
     throw new Error(`Already following: ${args.playerId}`)
+    // return context.db.mutation.deleteWatchlist(
+    //   {
+    //     data: {
+    //       user: { connect: { id: userId } },
+    //       player: { connect: { id: args.playerId } }
+    //     }
+    //   },
+    //   info
+    // )
   }
 
   return context.db.mutation.createWatchlist(
