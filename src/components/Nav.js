@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
-import { AUTH_TOKEN } from '../utils'
+import { getToken, getUser, removeToken } from './User'
 
 class Nav extends Component {
   render () {
-    const authToken = localStorage.getItem(AUTH_TOKEN)
-
     return (
       <div className='title-container'>
         <div className='title'>
@@ -13,14 +11,14 @@ class Nav extends Component {
           <div className='title-dark'>PRESEASON AUCTION</div>
         </div>
         <div className='title-login'>
-          {authToken ? (
+          {getToken() ? (
             <div
               onClick={() => {
-                localStorage.removeItem(AUTH_TOKEN)
+                removeToken()
                 this.props.history.push(`/`)
               }}
             >
-              Logout
+              Logout ({getUser()})
             </div>
           ) : (
             <NavLink to='/login'>
