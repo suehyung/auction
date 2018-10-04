@@ -65,19 +65,16 @@ h2 {
 }
 
 .title-login {
-  padding: 8px 24px 8px 0;
+  padding: 12px 24px 10px 0;
 }
 
 .title-login a {
   text-decoration: none;
 }
 
-.title-login a:hover {
+.title-login :hover {
   color: grey;
-}
-
-.title-login a:active {
-  color: black;
+  cursor: pointer;
 }
 
 
