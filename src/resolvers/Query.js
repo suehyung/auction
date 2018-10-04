@@ -24,4 +24,8 @@ function users (parent, args, context, info) {
   return context.db.query.users({ where, orderBy: args.orderBy }, info)
 }
 
-module.exports = { players, users }
+function player (parent, args, context, info) {
+  return context.db.query.player({ where: { id: args.id } }, info)
+}
+
+module.exports = { players, users, player }
