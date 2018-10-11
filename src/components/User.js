@@ -13,7 +13,7 @@ function getUser () {
   let userInfo = {}
   if (getToken()) {
     userInfo = jwt.verify(getToken(), APP_SECRET)
-    return userInfo.team
+    return userInfo.userId
   }
 }
 
