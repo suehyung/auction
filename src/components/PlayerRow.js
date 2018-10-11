@@ -11,8 +11,9 @@ PlayerRow.propTypes = {
 
 // Add toggle on click function to add/remove watchlist array element
 function CheckWatchlist (props) {
+  const userId = getUser()
   return (
-    props.user.find(user => user.user.id === getUser())
+    props.user.find(user => user.user.id === userId)
       ? <div className='heart'></div>
       : <div className='no-heart'></div>
   )

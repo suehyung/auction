@@ -14,7 +14,7 @@ const PLAYERS_LIST = gql`
       closingtime
       price
       maxbidder {team}
-      watchlist {user{team}}
+      watchlist {user{team, id}}
     }
   }
 `
