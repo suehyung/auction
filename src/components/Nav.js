@@ -1,6 +1,18 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import { getToken, getUser, removeToken } from './User'
+import { Query } from 'react-apollo'
+import { gql } from 'apollo-boost'
+
+const userId = getUser()
+
+const USER_TEAM = gql`
+  query GetUser($userId: String) {
+    getuser (id: $userId) {
+      team
+    }
+  }
+`
 
 class Nav extends Component {
   render () {
@@ -18,7 +30,21 @@ class Nav extends Component {
                 this.props.history.push(`/`)
               }}
             >
-              Logout ({getUser()})
+              Logout (
+              <Query
+                query={USER_TEAM}
+                variables={{userId}}>
+                {({ error, loading, data }) => {
+                  if (error) return (
+                    <div>`Oops! ${error.message}`</div>
+                  )
+                  if (loading) return (
+                    <div>Loading...</div>
+                  )
+                  return <span>{data.getuser.team}</span>
+                }}
+              </Query>
+              )
             </div>
           ) : (
             <NavLink to='/login'>
