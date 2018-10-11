@@ -7,6 +7,7 @@ type Query {
   users(filter: String, orderBy: UserOrderByInput): [User!]!
   player(id: ID!): Player
   user(id: ID!): User
+  getuser(id: String): User
 }
 
 type Mutation {

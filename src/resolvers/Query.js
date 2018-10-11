@@ -28,4 +28,8 @@ function player (parent, args, context, info) {
   return context.db.query.player({ where: { id: args.id } }, info)
 }
 
-module.exports = { players, users, player }
+function getuser (parent, args, context, info) {
+  return context.db.query.user({ where: { id: args.id } }, `{ team }`)
+}
+
+module.exports = { players, users, player, getuser }
