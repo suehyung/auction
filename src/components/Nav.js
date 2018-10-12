@@ -30,7 +30,7 @@ class Nav extends Component {
                 this.props.history.push(`/`)
               }}
             >
-              Logout (
+              <b>Logout</b> (
               <Query
                 query={USER_TEAM}
                 variables={{userId}}>
