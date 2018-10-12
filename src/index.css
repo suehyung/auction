@@ -311,7 +311,7 @@ button img {
   padding-right: 6px;
 }
 
-.list-name:hover {
+.list-name p:hover {
   font-weight: bold;
   cursor: pointer;
 }
@@ -332,21 +332,22 @@ button img {
 
 .heart {
   background-image: url('./img/favorite-active.svg');
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  height: 16px;
-  width: 100%;
 }
 
 .no-heart {
   background-image: url('./img/favorite-inactive.svg');
+}
+
+.watchlist {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   height: 16px;
   width: 100%;
 }
 
-
+.watchlist:hover {
+  cursor: pointer;
+}
 
 /* Styles for Player Bidding Page */
 .bid-container {
