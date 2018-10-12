@@ -45,27 +45,24 @@ async function watchlist (parent, args, context, info) {
   })
 
   if (playerExists) {
-    throw new Error(`Already following: ${args.playerId}`)
-    // return context.db.mutation.deleteWatchlist(
-    //   {
-    //     data: {
-    //       user: { connect: { id: userId } },
-    //       player: { connect: { id: args.playerId } }
-    //     }
-    //   },
-    //   info
-    // )
+    const watchlistId = await context.db.query.watchlists({ where: {
+      user: { id: userId },
+      player: { id: args.playerId }
+    }}, `{ id }`)
+    return context.db.mutation.deleteWatchlist({ where:
+      { id: watchlistId[0].id }
+    }, '')
+  } else {
+    return context.db.mutation.createWatchlist(
+      {
+        data: {
+          user: { connect: { id: userId } },
+          player: { connect: { id: args.playerId } }
+        }
+      },
+      info
+    )
   }
-
-  return context.db.mutation.createWatchlist(
-    {
-      data: {
-        user: { connect: { id: userId } },
-        player: { connect: { id: args.playerId } }
-      }
-    },
-    info
-  )
 }
 
 function post (parent, args, context, info) {
