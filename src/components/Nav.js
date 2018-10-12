@@ -36,10 +36,10 @@ class Nav extends Component {
                 variables={{userId}}>
                 {({ error, loading, data }) => {
                   if (error) return (
-                    <div>`Oops! ${error.message}`</div>
+                    <span>`Oops! ${error.message}`</span>
                   )
                   if (loading) return (
-                    <div>Loading...</div>
+                    <span>Loading...</span>
                   )
                   return <span>{data.getuser.team}</span>
                 }}
