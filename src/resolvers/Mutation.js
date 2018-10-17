@@ -66,7 +66,7 @@ async function watchlist (parent, args, context, info) {
 }
 
 function post (parent, args, context, info) {
-  const userId = getUserId(context)
+  // const userId = getUserId(context)
   return context.db.mutation.createPlayer(
     {
       data: {
