@@ -20,6 +20,8 @@ type Mutation {
     bidder: [String!],
     maxbid: [Float!],
     maxbidder: [String!],
+    fangraphsid: String,
+    fantraxid: String,
     watchlist: [String!]): Player!
   signup(email: String!, password: String!, team: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload

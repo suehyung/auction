@@ -18,6 +18,8 @@ type Player {
   bidtimestamp: [DateTime!]
   maxbid: [Float!]
   maxbidder: [User!]!
+  fangraphsid: String
+  fantraxid: String
   watchlist: [Watchlist!]!
 }
 

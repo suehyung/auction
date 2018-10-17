@@ -14,6 +14,8 @@ const PLAYERS_LIST = gql`
       closingtime
       price
       maxbidder {team}
+      fantraxid
+      fangraphsid
       watchlist {user{team, id}}
     }
   }

@@ -77,7 +77,9 @@ function post (parent, args, context, info) {
         price: args.price,
         bidder: args.bidder,
         maxbid: args.maxbid,
-        maxbidder: args.maxbidder
+        maxbidder: args.maxbidder,
+        fangraphsid: args.fangraphsid,
+        fantraxid: args.fantraxid
       }
     }, info
   )

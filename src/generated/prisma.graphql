@@ -1,5 +1,5 @@
 # source: https://ibl02-auction.herokuapp.com/auction/dev
-# timestamp: Mon Sep 17 2018 22:49:55 GMT-0700 (Pacific Daylight Time)
+# timestamp: Wed Oct 17 2018 11:48:22 GMT-0700 (Pacific Daylight Time)
 
 type AggregatePlayer {
   count: Int!
@@ -86,6 +86,8 @@ type Player implements Node {
   bidtimestamp: [DateTime!]!
   maxbid: [Float!]!
   maxbidder(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User!]
+  fangraphsid: String
+  fantraxid: String
   watchlist(where: WatchlistWhereInput, orderBy: WatchlistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Watchlist!]
 }
 
@@ -112,6 +114,8 @@ input PlayerCreateInput {
   team: String!
   position: String!
   closingtime: Int!
+  fangraphsid: String
+  fantraxid: String
   price: PlayerCreatepriceInput
   bidder: PlayerCreatebidderInput
   bidtimestamp: PlayerCreatebidtimestampInput
@@ -138,6 +142,8 @@ input PlayerCreateWithoutWatchlistInput {
   team: String!
   position: String!
   closingtime: Int!
+  fangraphsid: String
+  fantraxid: String
   price: PlayerCreatepriceInput
   bidder: PlayerCreatebidderInput
   bidtimestamp: PlayerCreatebidtimestampInput
@@ -167,6 +173,10 @@ enum PlayerOrderByInput {
   position_DESC
   closingtime_ASC
   closingtime_DESC
+  fangraphsid_ASC
+  fangraphsid_DESC
+  fantraxid_ASC
+  fantraxid_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
@@ -182,6 +192,8 @@ type PlayerPreviousValues {
   bidder: [String!]!
   bidtimestamp: [DateTime!]!
   maxbid: [Float!]!
+  fangraphsid: String
+  fantraxid: String
 }
 
 type PlayerSubscriptionPayload {
@@ -236,6 +248,8 @@ input PlayerUpdateInput {
   team: String
   position: String
   closingtime: Int
+  fangraphsid: String
+  fantraxid: String
   price: PlayerUpdatepriceInput
   bidder: PlayerUpdatebidderInput
   bidtimestamp: PlayerUpdatebidtimestampInput
@@ -265,6 +279,8 @@ input PlayerUpdateWithoutWatchlistDataInput {
   team: String
   position: String
   closingtime: Int
+  fangraphsid: String
+  fantraxid: String
   price: PlayerUpdatepriceInput
   bidder: PlayerUpdatebidderInput
   bidtimestamp: PlayerUpdatebidtimestampInput
@@ -490,6 +506,86 @@ input PlayerWhereInput {
 
   """All values greater than or equal the given value."""
   closingtime_gte: Int
+  fangraphsid: String
+
+  """All values that are not equal to given value."""
+  fangraphsid_not: String
+
+  """All values that are contained in given list."""
+  fangraphsid_in: [String!]
+
+  """All values that are not contained in given list."""
+  fangraphsid_not_in: [String!]
+
+  """All values less than the given value."""
+  fangraphsid_lt: String
+
+  """All values less than or equal the given value."""
+  fangraphsid_lte: String
+
+  """All values greater than the given value."""
+  fangraphsid_gt: String
+
+  """All values greater than or equal the given value."""
+  fangraphsid_gte: String
+
+  """All values containing the given string."""
+  fangraphsid_contains: String
+
+  """All values not containing the given string."""
+  fangraphsid_not_contains: String
+
+  """All values starting with the given string."""
+  fangraphsid_starts_with: String
+
+  """All values not starting with the given string."""
+  fangraphsid_not_starts_with: String
+
+  """All values ending with the given string."""
+  fangraphsid_ends_with: String
+
+  """All values not ending with the given string."""
+  fangraphsid_not_ends_with: String
+  fantraxid: String
+
+  """All values that are not equal to given value."""
+  fantraxid_not: String
+
+  """All values that are contained in given list."""
+  fantraxid_in: [String!]
+
+  """All values that are not contained in given list."""
+  fantraxid_not_in: [String!]
+
+  """All values less than the given value."""
+  fantraxid_lt: String
+
+  """All values less than or equal the given value."""
+  fantraxid_lte: String
+
+  """All values greater than the given value."""
+  fantraxid_gt: String
+
+  """All values greater than or equal the given value."""
+  fantraxid_gte: String
+
+  """All values containing the given string."""
+  fantraxid_contains: String
+
+  """All values not containing the given string."""
+  fantraxid_not_contains: String
+
+  """All values starting with the given string."""
+  fantraxid_starts_with: String
+
+  """All values not starting with the given string."""
+  fantraxid_not_starts_with: String
+
+  """All values ending with the given string."""
+  fantraxid_ends_with: String
+
+  """All values not ending with the given string."""
+  fantraxid_not_ends_with: String
   maxbidder_every: UserWhereInput
   maxbidder_some: UserWhereInput
   maxbidder_none: UserWhereInput
