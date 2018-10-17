@@ -344,11 +344,19 @@ button img {
   background-repeat: no-repeat;
   height: 16px;
   width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-.watchlist:hover {
+.watchlist div {
+  width: 16px;
+}
+
+.watchlist div:hover {
   cursor: pointer;
 }
+
+
 
 /* Styles for Player Bidding Page */
 .bid-container {
@@ -394,7 +402,7 @@ path:hover {
   top: -250px;
   left: -20px;
   width: 40%;
-  background-image: url('./img/hs01cdg_400_6.png');
+  /* background-image: url('./img/hs01cdg_400_6.png'); */
   background-repeat: no-repeat;
   background-size: cover;
   background-color: gray;

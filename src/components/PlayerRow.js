@@ -6,11 +6,6 @@ import { Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import PropTypes from 'prop-types'
 
-PlayerRow.propTypes = {
-  players: PropTypes.array.isRequired,
-  onSelect: PropTypes.func.isRequired
-}
-
 const TOGGLE_WATCHLIST = gql`
   mutation ToggleWatchlist($playerId: String!) {
     watchlist(playerId: $playerId) {
@@ -18,46 +13,54 @@ const TOGGLE_WATCHLIST = gql`
     }
   }
 `
+const userId = getUser()
 
 // Add toggle on click function to add/remove watchlist array element
 class CheckWatchlist extends React.Component {
   constructor (props) {
     super(props)
     this.state = { toggle: false }
+    this.setToggle = this.setToggle.bind(this)
     this.updateToggle = this.updateToggle.bind(this)
   }
 
   componentDidMount () {
-    this.updateToggle()
+    this.setToggle()
   }
 
-  // make it so that on complete, props.user into CheckWatchlist is updated
+  // Issue is props.user into CheckWatchlist is not updated, search how to get parent to send new props to child
+  setToggle () {
+    this.props.user.find(user => user.user.id === userId)
+      ? this.setState(() => { return { toggle: true } })
+      : this.setState(() => { return { toggle: false } })
+  }
+
   updateToggle () {
-    this.setState(() => {
-      return {
-        toggle: !this.state.toggle
-      }
-    })
+    this.setState(() => { return { toggle: !this.state.toggle } })
   }
 
   render () {
-    const userId = getUser()
     const playerId = this.props.id
+    const ToggleMutation =
+      <Mutation
+        mutation = {TOGGLE_WATCHLIST}
+        variables = {{playerId}}
+        onClick = {this.updateToggle} // onClick would be faster
+      >
+        {mutation => (<div onClick={ mutation }> </div>)}
+      </Mutation>
 
     return (
-      <Mutation
-        mutation = { TOGGLE_WATCHLIST }
-        variables = {{playerId}}
-        onCompleted = {this.updateToggle}
-      >
-        {mutation => (
-          this.props.user.find(user => user.user.id === userId)
-            ? <div className='heart watchlist' onClick = { mutation }></div>
-            : <div className='no-heart watchlist' onClick = { mutation }></div>
-        )}
-      </Mutation>
+      this.state.toggle === true
+        ? <div className='heart watchlist' >{ToggleMutation}</div>
+        : <div className='no-heart watchlist' >{ToggleMutation}</div>
     )
   }
+}
+
+PlayerRow.propTypes = {
+  players: PropTypes.array.isRequired,
+  onSelect: PropTypes.func.isRequired
 }
 
 function PlayerRow (props) {
