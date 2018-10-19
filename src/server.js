@@ -19,7 +19,7 @@ const server = new GraphQLServer({
   context: req => ({
     ...req,
     db: new Prisma({
-      typeDefs: 'src/generated/prisma.graphql',
+      typeDefs: './src/generated/prisma.graphql',
       endpoint: 'https://ibl02-auction.herokuapp.com/auction/dev',
       secret: 'mysecret123',
       debug: true
