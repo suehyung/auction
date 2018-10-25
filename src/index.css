@@ -71,6 +71,8 @@ h2 {
 
 .title-login a {
   text-decoration: none;
+  color: black;
+  font-weight: bold;
 }
 
 .title-login :hover {
@@ -282,15 +284,31 @@ button img {
   font-size: 12px;
 }
 
-.list-title-name {
+td:nth-of-type(1) {
   width: 55%;
-  color: black;
+  border-bottom: 0;
+}
+
+td:nth-of-type(2) {
+  width: 0px;
+  z-index: -1;
+  color: rgb(255,255,255,0);
+}
+
+td:nth-of-type(3) {
+  width: 30%;
+  border-bottom: 0;
+}
+
+td:nth-of-type(4) {
+  width: 15%;
+  border-bottom: 0;
 }
 
 .list-container {
   margin: 0;
   padding: 0;
-  overflow: auto;
+  overflow-x: inherit;
 }
 
 .list-row {
@@ -298,6 +316,7 @@ button img {
   align-items: center;
   background-color: white;
   border-radius: 10px;
+  border-bottom: 0px;
   margin: 4px 0 0 0;
   padding: 10px;
   height: 20px;
@@ -309,6 +328,7 @@ button img {
   color: darkmagenta;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding-right: 6px;
 }
 
@@ -343,7 +363,7 @@ button img {
   background-position: 50% 50%;
   background-repeat: no-repeat;
   height: 16px;
-  width: 100%;
+  width: 20%;
   display: flex;
   justify-content: center;
 }
