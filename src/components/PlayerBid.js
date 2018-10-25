@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Countdown from './Countdown'
-import ShowPrice from './ShowPrice'
+import { Countdown, ShowPrice } from './Formatting'
 
 PlayerBid.propTypes = {
-  selectedPlayer: PropTypes.object.isRequired,
+  selectedPlayer: PropTypes.object,
   onSelect: PropTypes.func.isRequired
 }
 
