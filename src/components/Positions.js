@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
-import PlayerRow from './PlayerRow'
+import PlayerTable from './PlayerTable'
 import PlayerBid from './PlayerBid'
 
 const PLAYERS_LIST = gql`
@@ -15,20 +15,6 @@ const PLAYERS_LIST = gql`
       price
       maxbidder {team}
       watchlist {user{team}}
-    }
-  }
-`
-
-const CLOSINGTIME_DESC = gql`
-  {
-    players(orderBy: closingtime_DESC) {
-      id
-      name
-      team
-      position
-      closingtime
-      price
-      maxbidder {team}
     }
   }
 `
@@ -105,7 +91,7 @@ class Positions extends Component {
                   <div className='list-closes'>CLOSES</div>
                   <div className='list-price'>PRICE</div>
                 </div>
-                <PlayerRow
+                <PlayerTable
                   onSelect = {this.updatePlayer}
                   players = {data.players} />
                 {/* Consider filter by watchlist, then if position not blank, then show title and PlayerRow */}
