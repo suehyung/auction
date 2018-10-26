@@ -30,11 +30,11 @@ function PlayerBid (props) {
           <div className='bidder'>{props.selectedPlayer.maxbidder}</div>
         </div>
         <div className='player-photo'
-          style={{backgroundImage: `url('https://img.fantrax.com/si/headshots/MLB/hs${props.selectedPlayer.fantraxid}_400_1.png')`}}>
+          style={(props.selectedPlayer.fantraxid !== null) ? {backgroundImage: `url('https://img.fantrax.com/si/headshots/MLB/hs${props.selectedPlayer.fantraxid}_400_1.png')`} : {backgroundImage: null}}>
           <div className='photo-resize'></div>
         </div>
         <form className='bid-form'>
-          <label for='enter-bid'>Enter your bid</label>
+          <label htmlFor='enter-bid'>Enter your bid</label>
           <div className='dollar'>
             <i>$</i>
             <input
