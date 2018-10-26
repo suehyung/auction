@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
+import { Menu, MenuItem } from '@material-ui/core';
 import TableCell from '@material-ui/core/TableCell'
 import TablePagination from '@material-ui/core/TablePagination'
 import TableSortLabel from '@material-ui/core/TableSortLabel'
@@ -40,6 +41,82 @@ const rows = [
   { id: 'closingtime', numeric: false, disablePadding: true, label: 'Closing' },
   { id: 'price', numeric: true, disablePadding: true, label: 'Price' }
 ]
+
+const positions = [
+  {value: 'C ', display: 'Catcher'},
+  {value: '1B', display: 'First Base'},
+  {value: '2B', display: 'Second Base'},
+  {value: 'SS', display: 'Shortstop'},
+  {value: '3B', display: 'Third Base'},
+  {value: 'CF', display: 'Centerfield'},
+  {value: 'OF', display: 'Outfield'},
+  {value: 'DH', display: 'Designated Hitter'},
+  {value: 'SP', display: 'Starting Pitcher'},
+  {value: 'RP', display: 'Relief Pitcher'}
+]
+
+class EnhancedTableToolbar extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {
+      anchorEl: null,
+    }
+  }
+
+  handleClick = event => {
+    this.setState({ anchorEl: event.currentTarget })
+  }
+
+  handleClose () {
+    this.setState({ anchorEl: null })
+  }
+
+  render () {
+    const { anchorEl } = this.state
+
+    return (
+      <div className='drop-menu'>
+        <div className='position'>{this.props.selectedPosition.display}</div>
+        <Tooltip title="Filter list">
+          <IconButton aria-label="Filter list">
+            <FilterListIcon />
+          </IconButton>
+        </Tooltip>
+        <button className='dropdown purple'
+          aria-owns={anchorEl ? 'simple-menu' : null}
+          aria-haspopup="true"
+          onClick={this.handleClick}
+        >POSITION</button>
+        <Menu
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={() => this.setState({ anchorEl: null })}
+        >
+          {positions.map(position => {
+            return (
+              <MenuItem
+              key= {position.value} 
+              onClick={() => {this.props.onPositionSelect(position);this.handleClose()}}>
+                {position.value}
+              </MenuItem>
+            )
+          })}
+        </Menu>
+      </div>
+    )
+  }
+}
+
+const toolbarStyles = theme => ({
+  root: {
+    paddingRight: theme.spacing.unit,
+  },
+  spacer: {
+    flex: '1 1 100%',
+  },
+})
+
+EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar)
 
 class EnhancedTableHead extends React.Component {
   createSortHandler = property => event => {
@@ -87,30 +164,6 @@ EnhancedTableHead.propTypes = {
   rowCount: PropTypes.number.isRequired,
 }
 
-const toolbarStyles = theme => ({
-  root: {
-    paddingRight: theme.spacing.unit,
-  },
-  spacer: {
-    flex: '1 1 100%',
-  },
-})
-
-let EnhancedTableToolbar = props => {
-  // If/then looks at route to determine whether to render the position dropdown menu, and display current position  
-  return (
-      <div className='drop-menu'>
-        <Tooltip title="Filter list">
-          <IconButton aria-label="Filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      </div>
-  )
-}
-
-EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar)
-
 const styles = theme => ({
   table: {
     minWidth: 340,
@@ -122,12 +175,26 @@ const styles = theme => ({
 class PlayerTable extends Component {
   constructor (props) {
     super(props)
+    this.updatePosition = this.updatePosition.bind(this)
     this.state = {
       order: 'asc',
       orderBy: 'name',
       page: 0,
-      rowsPerPage: 10
+      rowsPerPage: 10,
+      selectedPosition: {value: ''}
     }
+  }
+
+  componentDidMount () {
+    this.updatePosition(this.state.selectedPosition)
+  }
+
+  updatePosition (position) {
+    this.setState(() => {
+      return {
+        selectedPosition: position
+      }
+    })
   }
 
   handleRequestSort = (event, property) => {
@@ -149,11 +216,12 @@ class PlayerTable extends Component {
 
   render() {
     const { classes, players, onSelect } = this.props
-    const { order, orderBy, rowsPerPage, page } = this.state
+    const { order, orderBy, rowsPerPage, page, selectedPosition } = this.state
 
     return (
       <div>
-        <EnhancedTableToolbar />
+        <EnhancedTableToolbar onPositionSelect = {this.updatePosition}
+        selectedPosition = {this.state.selectedPosition}/>
         <div className={classes.tableWrapper}>
           <table className={classes.table} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -165,6 +233,7 @@ class PlayerTable extends Component {
             <tbody className='list-container'>
               {stableSort(players, getSorting(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .filter(player => {return player.position.includes(selectedPosition.value)})
                 .map(player => {
                   return (
                     <tr className='list-row' key={player.id}>
