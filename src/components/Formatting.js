@@ -1,7 +1,7 @@
 import React from 'react'
 
 function FormatPrice (price) {
-  let num = price[price.length - 1]
+  let num = price[0]
   return parseFloat(num).toFixed(2)
 }
 

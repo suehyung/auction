@@ -11,16 +11,6 @@ import FilterListIcon from '@material-ui/icons/FilterList'
 import { Countdown, ShowPrice } from './Formatting'
 import CheckWatchlist from './CheckWatchlist'
 
-function desc(a, b, orderBy) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1
-  }
-  return 0
-}
-
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
@@ -32,7 +22,26 @@ function stableSort(array, cmp) {
 }
 
 function getSorting(order, orderBy) {
-  return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy)
+  return function (a,b) { 
+    if(a[orderBy].length === 0){
+      return 1
+    }
+    else if(b[orderBy].length === 0){
+      return -1
+    }
+    else if(a[orderBy] === b[orderBy]){
+      return 0
+    }
+    else if(order === 'desc') {
+      return a[orderBy] < b[orderBy] ? 1 : -1;
+    }
+    else if(order !== 'desc') {
+      return a[orderBy] < b[orderBy] ? -1 : 1;
+    }
+  }
+  // return order === 'desc' 
+  //   ? (a, b) => desc(a, b, orderBy)
+  //   : (a, b) => -desc(a, b, orderBy)
 }
 
 const rows = [
