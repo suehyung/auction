@@ -36,14 +36,14 @@ class Login extends Component {
       <div className='main-container'>
         <div className='leftpane'>
           <h4>{login ? 'Login' : 'Sign Up'}</h4>
-          <div className = 'login-box'>
+          <div className='login-box'>
             {!login && (
               <input
                 value={team}
                 onChange={e => this.setState({ team: e.target.value })}
                 type='text'
                 placeholder='Team Name'
-                className = 'login-input'
+                className='login-input'
               />
             )}
             <input
@@ -51,17 +51,17 @@ class Login extends Component {
               onChange={e => this.setState({ email: e.target.value })}
               type='text'
               placeholder='Email address'
-              className = 'login-input'
+              className='login-input'
             />
             <input
               value={password}
               onChange={e => this.setState({ password: e.target.value })}
               type='password'
               placeholder='Password'
-              className = 'login-input'
+              className='login-input'
             />
           </div>
-          <div className = 'login-box'>
+          <div className='login-box'>
             <Mutation
               mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
               variables={{ email, password, team }}
@@ -69,8 +69,8 @@ class Login extends Component {
             >
               {mutation => (
                 <div
-                  className = 'button login-button' 
-                  onClick = {mutation}>
+                  className='button login-button' 
+                  onClick={mutation}>
                   {login ? 'LOGIN' : 'Create Account'}
                 </div>
               )}

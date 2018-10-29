@@ -23,13 +23,11 @@ class Nav extends Component {
           <div className='title-dark'>PRESEASON AUCTION</div>
         </div>
         <div className='title-login'>
-          {getToken() ? (
-            <div
-              onClick={() => {
-                removeToken()
-                this.props.history.push(`/`)
-              }}
-            >
+          {getToken()
+            ? <div onClick={() => {
+              removeToken()
+              this.props.history.push(`/`)
+            }}>
               <b>Logout</b> (
               <Query
                 query={USER_TEAM}
@@ -43,14 +41,10 @@ class Nav extends Component {
                   )
                   return <span>{data.getuser.team}</span>
                 }}
-              </Query>
-              )
+              </Query>)
             </div>
-          ) : (
-            <NavLink to='/login'>
-              Login
-            </NavLink>
-          )}
+            : <NavLink to='/login'>Login</NavLink>
+          }
         </div>
       </div>
     )

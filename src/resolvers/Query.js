@@ -11,6 +11,10 @@ function players (parent, args, context, info) {
   return context.db.query.players({ where, orderBy: args.orderBy }, info)
 }
 
+function player (parent, args, context, info) {
+  return context.db.query.player({ where: { id: args.id } }, info)
+}
+
 function users (parent, args, context, info) {
   const where = args.filter
     ? {
@@ -22,10 +26,6 @@ function users (parent, args, context, info) {
     : {}
 
   return context.db.query.users({ where, orderBy: args.orderBy }, info)
-}
-
-function player (parent, args, context, info) {
-  return context.db.query.player({ where: { id: args.id } }, info)
 }
 
 function getuser (parent, args, context, info) {

@@ -49,9 +49,9 @@ async function watchlist (parent, args, context, info) {
       user: { id: userId },
       player: { id: args.playerId }
     }}, `{ id }`)
-    return context.db.mutation.deleteWatchlist({ where:
-      { id: watchlistId[0].id }
-    }, '')
+    return context.db.mutation.deleteWatchlist({ where: {
+      id: watchlistId[0].id
+    }}, '')
   } else {
     return context.db.mutation.createWatchlist(
       {
@@ -66,7 +66,6 @@ async function watchlist (parent, args, context, info) {
 }
 
 function post (parent, args, context, info) {
-  // const userId = getUserId(context)
   return context.db.mutation.createPlayer(
     {
       data: {

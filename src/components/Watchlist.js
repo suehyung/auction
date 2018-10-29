@@ -59,13 +59,13 @@ class Watchlist extends Component {
             <div className='main-container'>
               <div className='leftpane'>
                 <PlayerTable
-                  onSelect = {this.updatePlayer}
-                  players = {data.players} />
+                  onSelect={this.updatePlayer}
+                  players={data.players} />
               </div>
               <div className='rightpane'>
                 <PlayerBid
-                  onSelect = {this.updatePlayer}
-                  selectedPlayer = {this.state.selectedPlayer} />
+                  onSelect={this.updatePlayer}
+                  selectedPlayer={this.state.selectedPlayer} />
               </div>
             </div>
           )

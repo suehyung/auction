@@ -11,7 +11,9 @@ function PlayerBid (props) {
   return (
     props.selectedPlayer !== null
       ? <div className='bid-container'>
-        <svg height='36px' width='36px' className='close-window' version='1.1' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg' onClick = {props.onSelect.bind(null, null)} >
+        <svg height='36px' width='36px' className='close-window' version='1.1'
+          viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'
+          onClick={props.onSelect.bind(null, null)} >
           <path d='M17.459,16.014l8.239-8.194c0.395-0.391,0.395-1.024,0-1.414c-0.394-0.391-1.034-0.391-1.428,0  l-8.232,8.187L7.73,6.284c-0.394-0.395-1.034-0.395-1.428,0c-0.394,0.396-0.394,1.037,0,1.432l8.302,8.303l-8.332,8.286  c-0.394,0.391-0.394,1.024,0,1.414c0.394,0.391,1.034,0.391,1.428,0l8.325-8.279l8.275,8.276c0.394,0.395,1.034,0.395,1.428,0  c0.394-0.396,0.394-1.037,0-1.432L17.459,16.014z' fill='gray' />
         </svg>
         <div className='white box'>
@@ -30,7 +32,9 @@ function PlayerBid (props) {
           <div className='bidder'>{props.selectedPlayer.maxbidder}</div>
         </div>
         <div className='player-photo'
-          style={(props.selectedPlayer.fantraxid !== null) ? {backgroundImage: `url('https://img.fantrax.com/si/headshots/MLB/hs${props.selectedPlayer.fantraxid}_400_1.png')`} : {backgroundImage: null}}>
+          style={(props.selectedPlayer.fantraxid !== null)
+            ? {backgroundImage: `url('https://img.fantrax.com/si/headshots/MLB/hs${props.selectedPlayer.fantraxid}_400_1.png')`}
+            : {backgroundImage: null} }>
           <div className='photo-resize'></div>
         </div>
         <form className='bid-form'>

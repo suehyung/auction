@@ -84,7 +84,7 @@ class EnhancedTableToolbar extends Component {
         </Tooltip>
         <button className='dropdown purple'
           aria-owns={anchorEl ? 'simple-menu' : null}
-          aria-haspopup="true"
+          aria-haspopup='true'
           onClick={this.handleClick}
         >POSITION</button>
         <Menu
@@ -118,7 +118,7 @@ const toolbarStyles = theme => ({
 
 EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar)
 
-class EnhancedTableHead extends React.Component {
+class EnhancedTableHead extends Component {
   createSortHandler = property => event => {
     this.props.onRequestSort(event, property)
   }
@@ -137,7 +137,7 @@ class EnhancedTableHead extends React.Component {
                 padding={row.disablePadding ? 'none' : 'default'}
               >
                 <Tooltip
-                  title="Sort"
+                  title='Sort'
                   placement={row.numeric ? 'bottom-end' : 'bottom-start'}
                   enterDelay={300}
                 >
@@ -166,7 +166,7 @@ EnhancedTableHead.propTypes = {
 
 const styles = theme => ({
   table: {
-    minWidth: 340,
+    minWidth: 320,
     width: '100%',
 
   },
