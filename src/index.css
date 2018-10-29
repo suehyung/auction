@@ -501,7 +501,7 @@ path:hover {
 input::placeholder {
   font-family: Nunito;
   font-weight: extra-light;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .dollar {
@@ -511,7 +511,7 @@ input::placeholder {
 .dollar > i {
   position: absolute;
   display: block;
-  top: 10px;
+  top: 8px;
   width: 25px;
   text-align: center;
   font-style: normal;
