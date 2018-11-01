@@ -268,6 +268,10 @@ button img {
   background-repeat: no-repeat;
 }
 
+.dropdown:hover {
+  cursor: pointer;
+}
+
 .purple {
   background-color: #B719B0;
   color: white;
@@ -279,8 +283,9 @@ button img {
 .grey {
   background-color: white;
   color: black;
+  border: 0;
   background-image: url('./img/triangle-grey.svg');
-  background-position: 90% 48%;
+  background-position: 90% 50%;
 }
 
 
