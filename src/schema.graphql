@@ -18,14 +18,25 @@ type Mutation {
     closingtime: Int!,
     price: [Float!],
     bidder: [String!],
-    maxbid: [Float!],
-    maxbidder: [String!],
+    bidtimestamp: [String!],
+    maxbid: Float,
+    maxbidder: String,
     fangraphsid: String,
     fantraxid: String,
     watchlist: [String!]): Player!
-  signup(email: String!, password: String!, team: String!): AuthPayload
-  login(email: String!, password: String!): AuthPayload
-  watchlist(playerId: String): Watchlist
+  signup(
+    email: String!,
+    password: String!,
+    team: String!): AuthPayload
+  login(
+    email: String!,
+    password: String!): AuthPayload
+  watchlist(playerId: String!): Watchlist
+  placebid(
+    playerId: String!,
+    price: Float!,
+    bidder: String!,
+    bidtimestamp: String!): Player!
 }
 
 type AuthPayload {

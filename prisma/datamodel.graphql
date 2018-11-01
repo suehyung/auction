@@ -15,9 +15,9 @@ type Player {
   closingtime: Int!
   price: [Float!]
   bidder: [String!]
-  bidtimestamp: [DateTime!]
-  maxbid: [Float!]
-  maxbidder: [User!]!
+  bidtimestamp: [Int!]
+  maxbid: Float
+  maxbidder: String
   fangraphsid: String
   fantraxid: String
   watchlist: [Watchlist!]!
