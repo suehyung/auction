@@ -14,7 +14,7 @@ const USER_TEAM = gql`
   }
 `
 
-class Nav extends Component {
+class Nav extends Component {  
   render () {
     return (
       <div className='title-container'>
@@ -31,7 +31,8 @@ class Nav extends Component {
               <b>Logout</b> (
               <Query
                 query={USER_TEAM}
-                variables={{userId}}>
+                variables={{userId}}
+              >
                 {({ error, loading, data }) => {
                   if (error) return (
                     <span>`Oops! ${error.message}`</span>

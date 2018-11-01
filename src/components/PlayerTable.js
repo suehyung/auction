@@ -11,6 +11,7 @@ import FilterListIcon from '@material-ui/icons/FilterList'
 import { Countdown, ShowPrice } from './Formatting'
 import CheckWatchlist from './CheckWatchlist'
 
+// Sorting functions below
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index])
   stabilizedThis.sort((a, b) => {
@@ -23,20 +24,20 @@ function stableSort(array, cmp) {
 
 function getSorting(order, orderBy) {
   return function (a,b) { 
-    if(a[orderBy].length === 0){
+    if (a[orderBy].length === 0) {
       return 1
     }
-    else if(b[orderBy].length === 0){
+    if (b[orderBy].length === 0) {
       return -1
     }
-    else if(a[orderBy] === b[orderBy]){
+    if (a[orderBy] === b[orderBy]) {
       return 0
     }
-    else if(order === 'desc') {
-      return a[orderBy] < b[orderBy] ? 1 : -1;
+    if (order === 'desc') {
+      return (a[orderBy] < b[orderBy]) ? 1 : -1
     }
-    else if(order !== 'desc') {
-      return a[orderBy] < b[orderBy] ? -1 : 1;
+    if (order === 'asc') {
+      return (a[orderBy] < b[orderBy]) ? -1 : 1
     }
   }
   // return order === 'desc' 
@@ -44,6 +45,7 @@ function getSorting(order, orderBy) {
   //   : (a, b) => -desc(a, b, orderBy)
 }
 
+// Table headers and Material UI style settings
 const rows = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
   { id: 'watchlist', numeric: false, disablePadding: true, label: 'Watchlist' },
@@ -51,7 +53,9 @@ const rows = [
   { id: 'price', numeric: true, disablePadding: true, label: 'Price' }
 ]
 
+// List of options in the position dropdown
 const positions = [
+  {value: '', display: 'All'},
   {value: 'C ', display: 'Catcher'},
   {value: '1B', display: 'First Base'},
   {value: '2B', display: 'Second Base'},
@@ -86,7 +90,7 @@ class EnhancedTableToolbar extends Component {
     return (
       <div className='drop-menu'>
         <div className='position'>{this.props.selectedPosition.display}</div>
-        <Tooltip title="Filter list">
+        <Tooltip title='Filter'>
           <IconButton aria-label="Filter list">
             <FilterListIcon />
           </IconButton>
@@ -104,9 +108,9 @@ class EnhancedTableToolbar extends Component {
           {positions.map(position => {
             return (
               <MenuItem
-              key= {position.value} 
+              key= {position.value}
               onClick={() => {this.props.onPositionSelect(position);this.handleClose()}}>
-                {position.value}
+                {position.display}
               </MenuItem>
             )
           })}
@@ -256,7 +260,7 @@ class PlayerTable extends Component {
                         <Countdown closingtime={player.closingtime} />
                       </td>
                       <td className='list-price' >
-                        <ShowPrice price={player.price} />
+                        <ShowPrice price={player.price[0]} />
                       </td>
                     </tr>
                   )

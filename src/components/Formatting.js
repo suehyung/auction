@@ -1,13 +1,13 @@
 import React from 'react'
 
 function FormatPrice (price) {
-  let num = price[0]
+  let num = price
   return parseFloat(num).toFixed(2)
 }
 
 function ShowPrice (props) {
   return (
-    props.price[0]
+    props.price
       ? <div>&#36;{FormatPrice(props.price)}</div>
       : <div></div>
   )

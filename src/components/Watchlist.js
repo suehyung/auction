@@ -13,7 +13,10 @@ const PLAYERS_LIST = gql`
       position
       closingtime
       price
-      maxbidder {team}
+      bidder
+      bidtimestamp
+      maxbidder
+      maxbid
       fantraxid
       fangraphsid
       watchlist {user{team, id}}
@@ -24,7 +27,6 @@ const PLAYERS_LIST = gql`
 class Watchlist extends Component {
   constructor (props) {
     super(props)
-    this.updatePlayer = this.updatePlayer.bind(this)
     this.state = { selectedPlayer: null }
   }
 
@@ -32,12 +34,8 @@ class Watchlist extends Component {
     this.updatePlayer(this.state.selectedPlayer)
   }
 
-  updatePlayer (player) {
-    this.setState(() => {
-      return {
-        selectedPlayer: player
-      }
-    })
+  updatePlayer = (player) => {
+    this.setState({ selectedPlayer: player })
   }
 
   render () {
