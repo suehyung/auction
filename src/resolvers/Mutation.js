@@ -38,6 +38,9 @@ async function login (parent, args, context, info) {
 
 async function watchlist (parent, args, context, info) {
   const userId = getUserId(context)
+  if (!userId) {
+    throw new Error('Must be logged in to favorite a player')
+  }
 
   const playerExists = await context.db.exists.Watchlist({
     user: { id: userId },
@@ -59,10 +62,31 @@ async function watchlist (parent, args, context, info) {
           user: { connect: { id: userId } },
           player: { connect: { id: args.playerId } }
         }
-      },
-      info
+      }, `{ id }`
     )
   }
+}
+
+async function placebid (parent, args, context, info) {
+  const userId = getUserId(context)
+  const priceHistory = await context.db.query.players({ where: {
+    id: args.playerId }}, `{ price bidder bidtimestamp }`)
+  priceHistory.price.unshift(args.price)
+  priceHistory.bidder.unshift(args.bidder)
+  priceHistory.bidtimestamp.unshift(args.timestamp)
+
+  return context.db.mutation.updatePlayer(
+    {
+      data: {
+        price: { set: [priceHistory.price] },
+        bidder: { set: [priceHistory.bidder] },
+        bidtimestamp: { set: [priceHistory.timestamp] }
+      },
+      where: {
+        id: args.playerId
+      }
+    }, `{ id price bidder bidtimestamp }`
+  )
 }
 
 function post (parent, args, context, info) {
@@ -75,8 +99,7 @@ function post (parent, args, context, info) {
         closingtime: args.closingtime,
         price: args.price,
         bidder: args.bidder,
-        maxbid: args.maxbid,
-        maxbidder: args.maxbidder,
+        bidtimestamp: args.bidtimestamp,
         fangraphsid: args.fangraphsid,
         fantraxid: args.fantraxid
       }
@@ -88,5 +111,6 @@ module.exports = {
   signup,
   login,
   watchlist,
+  placebid,
   post
 }
