@@ -62,30 +62,29 @@ async function watchlist (parent, args, context, info) {
           user: { connect: { id: userId } },
           player: { connect: { id: args.playerId } }
         }
-      }, `{ id }`
+      }, `{ id watchlist }`
     )
   }
 }
 
 async function placebid (parent, args, context, info) {
-  const userId = getUserId(context)
-  const priceHistory = await context.db.query.players({ where: {
-    id: args.playerId }}, `{ price bidder bidtimestamp }`)
-  priceHistory.price.unshift(args.price)
+  const priceHistory = await context.db.query.player({ where: {
+    id: args.playerId }}, `{ bidhistory bidder }`)
+  console.log(priceHistory)
+  priceHistory.bidhistory.unshift(args.bid)
   priceHistory.bidder.unshift(args.bidder)
-  priceHistory.bidtimestamp.unshift(args.timestamp)
 
   return context.db.mutation.updatePlayer(
     {
       data: {
-        price: { set: [priceHistory.price] },
-        bidder: { set: [priceHistory.bidder] },
-        bidtimestamp: { set: [priceHistory.timestamp] }
+        price: args.bid,
+        bidhistory: { set: priceHistory.bidhistory },
+        bidder: { set: priceHistory.bidder }
       },
       where: {
         id: args.playerId
       }
-    }, `{ id price bidder bidtimestamp }`
+    }, info
   )
 }
 
@@ -98,6 +97,7 @@ function post (parent, args, context, info) {
         position: args.position,
         closingtime: args.closingtime,
         price: args.price,
+        bidhistory: args.bidhistory,
         bidder: args.bidder,
         bidtimestamp: args.bidtimestamp,
         fangraphsid: args.fangraphsid,
