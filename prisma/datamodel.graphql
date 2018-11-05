@@ -13,7 +13,8 @@ type Player {
   team: String!
   position: String!
   closingtime: Int!
-  price: [Float!]
+  price: Float
+  bidhistory: [Float!]
   bidder: [String!]
   bidtimestamp: [Int!]
   maxbid: Float

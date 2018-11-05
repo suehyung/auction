@@ -1,5 +1,5 @@
 # source: https://ibl02-auction.herokuapp.com/auction/dev
-# timestamp: Wed Oct 31 2018 14:16:36 GMT-0700 (Pacific Daylight Time)
+# timestamp: Thu Nov 01 2018 09:06:31 GMT-0700 (Pacific Daylight Time)
 
 type AggregatePlayer {
   count: Int!
@@ -81,7 +81,8 @@ type Player implements Node {
   team: String!
   position: String!
   closingtime: Int!
-  price: [Float!]!
+  price: Float
+  bidhistory: [Float!]!
   bidder: [String!]!
   bidtimestamp: [Int!]!
   maxbid: Float
@@ -105,6 +106,10 @@ input PlayerCreatebidderInput {
   set: [String!]
 }
 
+input PlayerCreatebidhistoryInput {
+  set: [Float!]
+}
+
 input PlayerCreatebidtimestampInput {
   set: [Int!]
 }
@@ -114,11 +119,12 @@ input PlayerCreateInput {
   team: String!
   position: String!
   closingtime: Int!
+  price: Float
   maxbid: Float
   maxbidder: String
   fangraphsid: String
   fantraxid: String
-  price: PlayerCreatepriceInput
+  bidhistory: PlayerCreatebidhistoryInput
   bidder: PlayerCreatebidderInput
   bidtimestamp: PlayerCreatebidtimestampInput
   watchlist: WatchlistCreateManyWithoutPlayerInput
@@ -129,20 +135,17 @@ input PlayerCreateOneWithoutWatchlistInput {
   connect: PlayerWhereUniqueInput
 }
 
-input PlayerCreatepriceInput {
-  set: [Float!]
-}
-
 input PlayerCreateWithoutWatchlistInput {
   name: String!
   team: String!
   position: String!
   closingtime: Int!
+  price: Float
   maxbid: Float
   maxbidder: String
   fangraphsid: String
   fantraxid: String
-  price: PlayerCreatepriceInput
+  bidhistory: PlayerCreatebidhistoryInput
   bidder: PlayerCreatebidderInput
   bidtimestamp: PlayerCreatebidtimestampInput
 }
@@ -169,6 +172,8 @@ enum PlayerOrderByInput {
   position_DESC
   closingtime_ASC
   closingtime_DESC
+  price_ASC
+  price_DESC
   maxbid_ASC
   maxbid_DESC
   maxbidder_ASC
@@ -188,7 +193,8 @@ type PlayerPreviousValues {
   team: String!
   position: String!
   closingtime: Int!
-  price: [Float!]!
+  price: Float
+  bidhistory: [Float!]!
   bidder: [String!]!
   bidtimestamp: [Int!]!
   maxbid: Float
@@ -240,6 +246,10 @@ input PlayerUpdatebidderInput {
   set: [String!]
 }
 
+input PlayerUpdatebidhistoryInput {
+  set: [Float!]
+}
+
 input PlayerUpdatebidtimestampInput {
   set: [Int!]
 }
@@ -249,11 +259,12 @@ input PlayerUpdateInput {
   team: String
   position: String
   closingtime: Int
+  price: Float
   maxbid: Float
   maxbidder: String
   fangraphsid: String
   fantraxid: String
-  price: PlayerUpdatepriceInput
+  bidhistory: PlayerUpdatebidhistoryInput
   bidder: PlayerUpdatebidderInput
   bidtimestamp: PlayerUpdatebidtimestampInput
   watchlist: WatchlistUpdateManyWithoutPlayerInput
@@ -267,20 +278,17 @@ input PlayerUpdateOneWithoutWatchlistInput {
   upsert: PlayerUpsertWithoutWatchlistInput
 }
 
-input PlayerUpdatepriceInput {
-  set: [Float!]
-}
-
 input PlayerUpdateWithoutWatchlistDataInput {
   name: String
   team: String
   position: String
   closingtime: Int
+  price: Float
   maxbid: Float
   maxbidder: String
   fangraphsid: String
   fantraxid: String
-  price: PlayerUpdatepriceInput
+  bidhistory: PlayerUpdatebidhistoryInput
   bidder: PlayerUpdatebidderInput
   bidtimestamp: PlayerUpdatebidtimestampInput
 }
@@ -503,6 +511,28 @@ input PlayerWhereInput {
 
   """All values greater than or equal the given value."""
   closingtime_gte: Int
+  price: Float
+
+  """All values that are not equal to given value."""
+  price_not: Float
+
+  """All values that are contained in given list."""
+  price_in: [Float!]
+
+  """All values that are not contained in given list."""
+  price_not_in: [Float!]
+
+  """All values less than the given value."""
+  price_lt: Float
+
+  """All values less than or equal the given value."""
+  price_lte: Float
+
+  """All values greater than the given value."""
+  price_gt: Float
+
+  """All values greater than or equal the given value."""
+  price_gte: Float
   maxbid: Float
 
   """All values that are not equal to given value."""

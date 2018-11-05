@@ -17,10 +17,8 @@ type Mutation {
     position: String!,
     closingtime: Int!,
     price: [Float!],
+    bidhistory: [Float!],
     bidder: [String!],
-    bidtimestamp: [String!],
-    maxbid: Float,
-    maxbidder: String,
     fangraphsid: String,
     fantraxid: String,
     watchlist: [String!]): Player!
@@ -34,9 +32,8 @@ type Mutation {
   watchlist(playerId: String!): Watchlist
   placebid(
     playerId: String!,
-    price: Float!,
-    bidder: String!,
-    bidtimestamp: String!): Player!
+    bid: Float!,
+    bidder: String!): Player!
 }
 
 type AuthPayload {
