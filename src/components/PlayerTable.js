@@ -24,10 +24,10 @@ function stableSort(array, cmp) {
 
 function getSorting(order, orderBy) {
   return function (a,b) { 
-    if (a[orderBy].length === 0) {
+    if (a[orderBy] === null) {
       return 1
     }
-    if (b[orderBy].length === 0) {
+    if (b[orderBy] === null) {
       return -1
     }
     if (a[orderBy] === b[orderBy]) {
@@ -40,9 +40,6 @@ function getSorting(order, orderBy) {
       return (a[orderBy] < b[orderBy]) ? -1 : 1
     }
   }
-  // return order === 'desc' 
-  //   ? (a, b) => desc(a, b, orderBy)
-  //   : (a, b) => -desc(a, b, orderBy)
 }
 
 // Table headers and Material UI style settings
@@ -260,7 +257,7 @@ class PlayerTable extends Component {
                         <Countdown closingtime={player.closingtime} />
                       </td>
                       <td className='list-price' >
-                        <ShowPrice price={player.price[0]} />
+                        <ShowPrice price={player.price} />
                       </td>
                     </tr>
                   )
