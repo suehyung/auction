@@ -14,8 +14,10 @@ const USER_TEAM = gql`
   }
 `
 
-class Nav extends Component {  
+class Nav extends Component {
   render () {
+    const { onAuth } = this.props
+
     return (
       <div className='title-container'>
         <div className='title'>
@@ -40,6 +42,7 @@ class Nav extends Component {
                   if (loading) return (
                     <span>Loading...</span>
                   )
+                  onAuth.bind(null, data.getuser.team)
                   return <span>{data.getuser.team}</span>
                 }}
               </Query>)

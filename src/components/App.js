@@ -10,17 +10,33 @@ import Positions from './Positions'
 import Watchlist from './Watchlist'
 
 class App extends Component {
+  constructor (props) {
+    super(props)
+    this.state = { userteam: 'Arsenal' }
+  }
+
+  // componentDidMount () {
+  //   this.updateUser(this.state.userteam)
+  // }
+
+  updateUser = (team) => {
+    this.setState({ userteam: team })
+  }
+
   render () {
     return (
       <Router>
         <div className='container'>
-          <Nav />
+          <Nav onAuth={this.updateUser}/>
           <div className='body-container'>
             <Menu />
             <Switch>
               <Route exact path='/' component={Home} />
               <Route path='/positions' component={Positions} />
-              <Route path='/watchlist' component={Watchlist} />
+              <Route 
+                path='/watchlist' 
+                render={(props) => <Watchlist userteam={this.state.userteam} />}
+              />
               <Route path='/bidhistory' component={BidHistory} />
               <Route path='/account' component={Account} />
               <Route path='/login' component={Login} />

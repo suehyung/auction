@@ -20,7 +20,7 @@ const LOGIN_MUTATION = gql`
 `
 
 class Login extends Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.state = {
       login: true,
