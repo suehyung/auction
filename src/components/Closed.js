@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class BidHistory extends Component {
+class Closed extends Component {
   render () {
     return (
       <div className='main-container'>
@@ -13,4 +13,4 @@ class BidHistory extends Component {
   }
 }
 
-export default BidHistory
+export default Closed

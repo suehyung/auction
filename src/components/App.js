@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Account from './Account'
-import BidHistory from './BidHistory'
+import Closed from './Closed'
 import Home from './Home'
 import Login from './Login'
 import Menu from './Menu'
@@ -37,7 +37,7 @@ class App extends Component {
                 path='/watchlist' 
                 render={(props) => <Watchlist userteam={this.state.userteam} />}
               />
-              <Route path='/bidhistory' component={BidHistory} />
+              <Route path='/closed' component={Closed} />
               <Route path='/account' component={Account} />
               <Route path='/login' component={Login} />
               <Route render={function () {
