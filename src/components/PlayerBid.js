@@ -12,6 +12,8 @@ const PLACE_BID = gql`
   }
 `
 
+// consider refactoring player info and bidding components for reuse
+
 class PlayerBid extends Component {
   constructor (props) {
     super(props)
@@ -20,6 +22,7 @@ class PlayerBid extends Component {
     }
   }
 
+  // resets input form after click or submit
   resetInput = () => {
     this.setState({ bid: ''})
   }
@@ -70,6 +73,7 @@ class PlayerBid extends Component {
           >
             {mutation => (
               <form className='bid-form' action='javascript:void(0)'
+              // action above prevents page reload
                 onSubmit={mutation}
               >
                 <label htmlFor='enter-bid'>Enter your bid</label>
