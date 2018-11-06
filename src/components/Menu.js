@@ -1,11 +1,19 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import searchimg from '../img/search.svg'
-import homeimg from '../img/home.svg'
-import positionimg from '../img/positions.svg'
-import watchlistimg from '../img/watchlist.svg'
-import historyimg from '../img/history.svg'
-import accountimg from '../img/account.svg'
+import search from '../img/search.svg'
+import home from '../img/home.svg'
+import position from '../img/positions.svg'
+import watchlist from '../img/watchlist.svg'
+import closed from '../img/closed.svg'
+import account from '../img/account.svg'
+
+const menuItems = [
+  {img: home, alt: 'home', url: '/', text: 'Home'},
+  {img: position, alt: 'position', url: '/positions', text: 'Positions'},
+  {img: watchlist, alt: 'watchlist', url: '/watchlist', text: 'Watchlist'},
+  {img: closed, alt: 'closed', url: '/closed', text: 'Closed'},
+  {img: account, alt: 'account', url: '/account', text: 'Account'}
+]
 
 function Menu () {
   return (
@@ -13,39 +21,20 @@ function Menu () {
       <li>
         <input type='text' className='search' placeholder='Player Search'></input>
         <button type='submit' className='search-button'>
-          <img src={searchimg} alt='search icon'/>
+          <img src={search} alt='search icon'/>
         </button>
       </li>
-      <li>
-        <div className='icon-container'>
-          <img src={homeimg} alt='home icon' className='menu-icon'/>
-        </div>
-        <NavLink exact activeClassName='active' to='/'>Home</NavLink>
-      </li>
-      <li>
-        <div className='icon-container'>
-          <img src={positionimg} alt='position icon' className='menu-icon'/>
-        </div>
-        <NavLink activeClassName='active' to='/positions'>Positions</NavLink>
-      </li>
-      <li>
-        <div className='icon-container'>
-          <img src={watchlistimg} alt='favorites icon' className='menu-icon'/>
-        </div>
-        <NavLink activeClassName='active' to='/watchlist'>Watchlist</NavLink>
-      </li>
-      <li>
-        <div className='icon-container'>
-          <img src={historyimg} alt='history icon' className='menu-icon'/>
-        </div>
-        <NavLink activeClassName='active' to='/bidhistory'>History</NavLink>
-      </li>
-      <li>
-        <div className='icon-container'>
-          <img src={accountimg} alt='account icon' className='menu-icon'/>
-        </div>
-        <NavLink activeClassName='active' to='/account'>Account</NavLink>
-      </li>
+      {menuItems.map(item => {
+        return (
+          <li key= {item.img}>
+            <div className='icon-container'>
+              <img src={item.img} alt={item.alt} className='menu-icon'/>
+            </div>
+            <NavLink exact activeClassName='active' to={item.url}
+            >{item.text}</NavLink>
+          </li>
+        )
+      })}
     </ul>
   )
 }
