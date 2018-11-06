@@ -1,5 +1,5 @@
 # source: https://ibl02-auction.herokuapp.com/auction/dev
-# timestamp: Thu Nov 01 2018 09:06:31 GMT-0700 (Pacific Daylight Time)
+# timestamp: Tue Nov 06 2018 15:00:24 GMT-0800 (Pacific Standard Time)
 
 type AggregatePlayer {
   count: Int!
@@ -84,7 +84,7 @@ type Player implements Node {
   price: Float
   bidhistory: [Float!]!
   bidder: [String!]!
-  bidtimestamp: [Int!]!
+  bidtimestamp: [Float!]!
   maxbid: Float
   maxbidder: String
   fangraphsid: String
@@ -111,7 +111,7 @@ input PlayerCreatebidhistoryInput {
 }
 
 input PlayerCreatebidtimestampInput {
-  set: [Int!]
+  set: [Float!]
 }
 
 input PlayerCreateInput {
@@ -196,7 +196,7 @@ type PlayerPreviousValues {
   price: Float
   bidhistory: [Float!]!
   bidder: [String!]!
-  bidtimestamp: [Int!]!
+  bidtimestamp: [Float!]!
   maxbid: Float
   maxbidder: String
   fangraphsid: String
@@ -251,7 +251,7 @@ input PlayerUpdatebidhistoryInput {
 }
 
 input PlayerUpdatebidtimestampInput {
-  set: [Int!]
+  set: [Float!]
 }
 
 input PlayerUpdateInput {

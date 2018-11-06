@@ -68,18 +68,23 @@ async function watchlist (parent, args, context, info) {
 }
 
 async function placebid (parent, args, context, info) {
+  let bidTime = new Date()
+  let timestamp = bidTime.getTime()
+
   const priceHistory = await context.db.query.player({ where: {
-    id: args.playerId }}, `{ bidhistory bidder }`)
+    id: args.playerId }}, `{ bidhistory bidder bidtimestamp }`)
   console.log(priceHistory)
   priceHistory.bidhistory.unshift(args.bid)
   priceHistory.bidder.unshift(args.bidder)
+  priceHistory.bidtimestamp.unshift(timestamp)
 
   return context.db.mutation.updatePlayer(
     {
       data: {
         price: args.bid,
         bidhistory: { set: priceHistory.bidhistory },
-        bidder: { set: priceHistory.bidder }
+        bidder: { set: priceHistory.bidder },
+        bidtimestamp: { set: priceHistory.bidtimestamp }
       },
       where: {
         id: args.playerId

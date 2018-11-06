@@ -16,7 +16,7 @@ type Player {
   price: Float
   bidhistory: [Float!]
   bidder: [String!]
-  bidtimestamp: [Int!]
+  bidtimestamp: [Float!]
   maxbid: Float
   maxbidder: String
   fangraphsid: String
