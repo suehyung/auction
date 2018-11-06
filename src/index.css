@@ -415,7 +415,7 @@ path:hover {
 
 .white {
   background-color: white;
-  height: 100px;
+  height: 80px;
   margin-top: 30px;
   padding: 20px 6px 0 45%;
   display: flex;
@@ -433,7 +433,7 @@ path:hover {
 
 .player-photo {
   position: relative;
-  top: -250px;
+  top: -230px;
   left: -20px;
   width: 40%;
   /* background-image: url('./img/hs01cdg_400_6.png'); */
@@ -482,7 +482,7 @@ path:hover {
 
 .bid-form {
   position: absolute;
-  top: 420px;
+  top: 390px;
   font-size: 14px;
   font-weight: normal;
   display: flex;
