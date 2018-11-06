@@ -16,18 +16,23 @@ class PlayerBid extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      bid: '',
+      bid: ''
     }
   }
 
+  resetInput = () => {
+    this.setState({ bid: ''})
+  }
+  
   render () {
     const { bid } = this.state
-    const selectedPlayer = this.props.selectedPlayer
+    const { selectedPlayer, bidder, players } = this.props
     let playerId = ''
+    let playerData = {}
     if (selectedPlayer !== null) {
-      playerId = this.props.selectedPlayer.id
+      playerId = selectedPlayer.id
+      playerData = players.filter(player => { return player.id === playerId })
     }
-    const bidder = this.props.userteam
 
     return (
       selectedPlayer !== null
@@ -48,9 +53,9 @@ class PlayerBid extends Component {
             </div>
             (or 1m after last bid)
             <div className='current-price'>
-              <ShowPrice price={selectedPlayer.price} />
+              <ShowPrice price={playerData[0].price} />
             </div>
-            <div className='bidder'>{selectedPlayer.bidder[0]}</div>
+            <div className='bidder'>{playerData[0].bidder[0]}</div>
           </div>
           <div className='player-photo'
             style={(selectedPlayer.fantraxid !== null)
@@ -58,30 +63,32 @@ class PlayerBid extends Component {
               : {backgroundImage: null} }>
             <div className='photo-resize'></div>
           </div>
-          <form className='bid-form'>
-            <label htmlFor='enter-bid'>Enter your bid</label>
-            <div className='dollar'>
-              <i>$</i>
-              <input
-                value={bid}
-                onChange={e => this.setState({ bid: e.target.value })}
-                type='number'
-                step='.20' min='.40' max='40.00'
-                id='enter-bid'
-                placeholder='.40'
-              />
-            </div>
-            <Mutation
-              mutation={PLACE_BID}
-              variables={{ playerId, bid, bidder }}
-            >
-              {mutation => (
-                <div className='button bid-button' onClick={mutation}>
-                  PLACE BID
+          <Mutation
+            mutation={PLACE_BID}
+            variables={{ playerId, bid, bidder }}
+            onCompleted={this.resetInput}
+          >
+            {mutation => (
+              <form className='bid-form' action='javascript:void(0)'
+                onSubmit={mutation}
+              >
+                <label htmlFor='enter-bid'>Enter your bid</label>
+                <div className='dollar'>
+                  <i>$</i>
+                  <input
+                    value={bid}
+                    onChange={e => this.setState({ bid: e.target.value })}
+                    type='number'
+                    step='.20' min='.40' max='40.00'
+                    id='enter-bid'
+                    placeholder='.40'
+                  />
                 </div>
-              )}
-            </Mutation>
-          </form>
+                <input className='button bid-button' onClick={mutation}
+                    value='PLACE BID' type='button'/>
+              </form>
+            )}
+          </Mutation>
         </div>
         : <div className='bid-container'></div>
     )

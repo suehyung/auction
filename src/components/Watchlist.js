@@ -64,7 +64,8 @@ class Watchlist extends Component {
                 <PlayerBid
                   onSelect={this.updatePlayer}
                   selectedPlayer={this.state.selectedPlayer}
-                  userteam={this.props.userteam} />
+                  bidder={this.props.userteam}
+                  players={data.players} />
               </div>
             </div>
           )
