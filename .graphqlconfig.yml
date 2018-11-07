@@ -2,7 +2,7 @@ projects:
   app:
     schemaPath: src/schema.graphql
     extensions:
-      load:
+      load:  # settings for csv upload; to run: graphql load
         csv: src/players.csv,
         mutation: post,
         mapping: {
