@@ -10,10 +10,10 @@ function getToken () {
 }
 
 function getUser () {
-  let userInfo = {}
+  let user = {}
   if (getToken()) {
-    userInfo = jwt.verify(getToken(), APP_SECRET)
-    return userInfo.userId
+    user = jwt.verify(getToken(), APP_SECRET)
+    return user.id
   }
 }
 

@@ -7,9 +7,9 @@ async function signup (parent, args, context, info) {
 
   const user = await context.db.mutation.createUser({
     data: { ...args, password }
-  }, `{ id }`)
+  }, `{ id team }`)
 
-  const token = jwt.sign({ userId: user.id }, APP_SECRET)
+  const token = jwt.sign({ id: user.id, team: user.team }, APP_SECRET)
 
   return {
     token,
@@ -28,7 +28,7 @@ async function login (parent, args, context, info) {
     throw new Error('Invalid password')
   }
 
-  const token = jwt.sign({ userId: user.id }, APP_SECRET)
+  const token = jwt.sign({ id: user.id }, APP_SECRET)
 
   return {
     token,
@@ -37,7 +37,10 @@ async function login (parent, args, context, info) {
 }
 
 async function watchlist (parent, args, context, info) {
-  if (!getUserId(context)) {
+  let userId = {}
+  if (getUserId(context)) {
+    userId = getUserId(context)
+  } else {
     throw new Error('Must be logged in to favorite a player')
   }
 
@@ -53,7 +56,7 @@ async function watchlist (parent, args, context, info) {
     }}, `{ id }`)
     return context.db.mutation.deleteWatchlist({ where: {
       id: watchlistId[0].id
-    }}, '')
+    }}, info)
   } else {
     return context.db.mutation.createWatchlist(
       {
@@ -61,7 +64,7 @@ async function watchlist (parent, args, context, info) {
           user: { connect: { id: userId } },
           player: { connect: { id: args.playerId } }
         }
-      }, `{ id watchlist }`
+      }, info
     )
   }
 }
