@@ -37,8 +37,7 @@ async function login (parent, args, context, info) {
 }
 
 async function watchlist (parent, args, context, info) {
-  const userId = getUserId(context)
-  if (!userId) {
+  if (!getUserId(context)) {
     throw new Error('Must be logged in to favorite a player')
   }
 
@@ -68,6 +67,10 @@ async function watchlist (parent, args, context, info) {
 }
 
 async function placebid (parent, args, context, info) {
+  if (!getUserId(context)) {
+    throw new Error('Must be logged in to bid')
+  }
+
   let bidTime = new Date()
   let timestamp = bidTime.getTime()
 
