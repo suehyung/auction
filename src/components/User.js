@@ -10,7 +10,7 @@ function getToken () {
 }
 
 function getUser () {
-  let user = {}
+  let user = null
   if (getToken()) {
     user = jwt.verify(getToken(), APP_SECRET)
     return user.id

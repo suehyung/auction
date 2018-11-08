@@ -43,7 +43,7 @@ class CheckWatchlist extends React.Component {
       <Mutation
         mutation = {TOGGLE_WATCHLIST}
         variables = {{playerId}}
-        onClick = {this.updateToggle} // onClick would be faster
+        onCompleted = {this.updateToggle}
       >
         {mutation => (<div onClick={ mutation }> </div>)}
       </Mutation>
