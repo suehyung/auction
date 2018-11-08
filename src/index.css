@@ -229,6 +229,14 @@ button img {
   cursor: pointer;
 }
 
+.button:focus {
+  outline: none
+}
+
+.button:active {
+  background-color: #9d9d9d
+}
+
 
 
 /* Dropdowns For Positions */
