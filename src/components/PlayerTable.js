@@ -86,7 +86,7 @@ class EnhancedTableToolbar extends Component {
 
     return (
       <div className='drop-menu'>
-        <div className='position'>{this.props.selectedPosition.display}</div>
+        <div className='position'>{this.props.selectedPosition.display || 'All'}</div>
         <Tooltip title='Filter'>
           <IconButton aria-label="Filter list">
             <FilterListIcon />
