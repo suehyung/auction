@@ -5,8 +5,6 @@ import { getToken, getUser, removeToken } from './User'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
-const userId = getUser()
-
 const USER_TEAM = gql`
   query GetUser($userId: String) {
     getuser (id: $userId) {
@@ -16,6 +14,8 @@ const USER_TEAM = gql`
 `
 
 function Nav (props) {
+  let userId = getUser()
+
   return (
     <div className='title-container'>
       <div className='title'>
