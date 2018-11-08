@@ -3,6 +3,7 @@ import { getUser } from './User'
 import { Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import PropTypes from 'prop-types'
+import Tooltip from '@material-ui/core/Tooltip'
 
 const TOGGLE_WATCHLIST = gql`
   mutation ToggleWatchlist($playerId: String!) {
@@ -11,7 +12,7 @@ const TOGGLE_WATCHLIST = gql`
     }
   }
 `
-const userId = getUser()
+let userId = getUser()
 
 // Add toggle on click function to add/remove watchlist array element
 class CheckWatchlist extends React.Component {
@@ -39,6 +40,7 @@ class CheckWatchlist extends React.Component {
 
   render () {
     const playerId = this.props.id
+    console.log(userId)
     const ToggleMutation =
       <Mutation
         mutation = {TOGGLE_WATCHLIST}
@@ -49,9 +51,13 @@ class CheckWatchlist extends React.Component {
       </Mutation>
 
     return (
-      this.state.toggle === true
-        ? <div className='heart watchlist' >{ToggleMutation}</div>
-        : <div className='no-heart watchlist' >{ToggleMutation}</div>
+      userId === undefined
+        ? <Tooltip title='Log in to favorite'>
+          <div className='no-heart watchlist'></div>
+        </Tooltip>
+        : this.state.toggle === true
+          ? <div className='heart watchlist' >{ToggleMutation}</div>
+          : <div className='no-heart watchlist' >{ToggleMutation}</div>
     )
   }
 }
