@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { withRouter } from 'react-router'
 import { getToken, getUser, removeToken } from './User'
 import { Query } from 'react-apollo'
 import { gql } from 'apollo-boost'
@@ -39,7 +40,6 @@ function Nav (props) {
                 if (loading) return (
                   <span>Loading...</span>
                 )
-                props.onAuth.bind(null, data.getuser.team)
                 return <span>{data.getuser.team}</span>
               }}
             </Query>)
@@ -51,4 +51,4 @@ function Nav (props) {
   )
 }
 
-export default Nav
+export default withRouter(Nav)
