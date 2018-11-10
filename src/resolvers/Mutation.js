@@ -18,7 +18,7 @@ async function signup (parent, args, context, info) {
 }
 
 async function login (parent, args, context, info) {
-  const user = await context.db.query.user({ where: { email: args.email } }, ` { id password } `)
+  const user = await context.db.query.user({ where: { email: args.email } }, ` { id team password } `)
   if (!user) {
     throw new Error('No such user found')
   }
@@ -28,7 +28,7 @@ async function login (parent, args, context, info) {
     throw new Error('Invalid password')
   }
 
-  const token = jwt.sign({ id: user.id }, APP_SECRET)
+  const token = jwt.sign({ id: user.id, team: user.team }, APP_SECRET)
 
   return {
     token,
