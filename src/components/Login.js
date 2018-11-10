@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import { AUTH_TOKEN } from '../utils'
+import { getTeam } from '../utils/User'
+import { withRouter } from 'react-router'
 
 const SIGNUP_MUTATION = gql`
   mutation SignupMutation($email: String!, $password: String!, $team: String!) {
@@ -92,8 +94,10 @@ class Login extends Component {
   _confirm = async data => {
     const { token } = this.state.login ? data.login : data.signup
     localStorage.setItem(AUTH_TOKEN, token)
+    let userteam = getTeam()
+    this.props.onAuth.bind(null, userteam)
     this.props.history.push(`/`)
   }
 }
 
-export default Login
+export default withRouter(Login)

@@ -4,7 +4,7 @@ function Home (props) {
   return (
     <div className='main-container'>
       <div className='leftpane'>
-        <div className='text'><h2>Welcome</h2>To start, select a position. You can sort by name, closing date, or price, and filter by closing round.</div>
+        <div className='text'><h2>Welcome, {props.userteam}</h2>To start, select a position. You can sort by name, closing date, or price, and filter by closing round.</div>
         <div className='text'><h2>Tips</h2>Winning bids will be highlighted:
           <div className='player-row highlight'></div>
           Bidding on a player will automatically add them to your Watchlist. Tap or click on the heart to add/remove a player from your Watchlist:

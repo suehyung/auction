@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Countdown, ShowPrice } from './Formatting'
-import { getUser } from './User'
 import { Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import Tooltip from '@material-ui/core/Tooltip'
@@ -14,9 +13,6 @@ const PLACE_BID = gql`
   }
 `
 // consider refactoring player info and bidding components for reuse
-
-let userId = getUser()
-
 class PlayerBid extends Component {
   constructor (props) {
     super(props)
@@ -79,7 +75,6 @@ class PlayerBid extends Component {
               // action above prevents page reload
                 onSubmit={mutation}
               >
-                <label htmlFor='enter-bid'>Enter your bid</label>
                 <div className='dollar'>
                   <i>$</i>
                   <input
@@ -91,7 +86,7 @@ class PlayerBid extends Component {
                     placeholder='.40'
                   />
                 </div>
-                { userId === undefined
+                { bidder === undefined
                 ? <Tooltip title='Log in to bid'>
                     <input className='button bid-button' value='PLACE BID' type='button'/>
                   </Tooltip>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { getUser } from './User'
+import { getUser } from '../utils/User'
 import { Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import PropTypes from 'prop-types'
@@ -40,7 +40,6 @@ class CheckWatchlist extends React.Component {
 
   render () {
     const playerId = this.props.id
-    console.log(userId)
     const ToggleMutation =
       <Mutation
         mutation = {TOGGLE_WATCHLIST}

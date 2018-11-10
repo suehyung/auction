@@ -8,38 +8,45 @@ import Menu from './Menu'
 import Nav from './Nav'
 import Positions from './Positions'
 import Watchlist from './Watchlist'
+import { getTeam } from '../utils/User'
 
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = { userteam: 'Arsenal' }
+    this.state = { userteam: '' }
   }
 
-  // componentDidMount () {
-  //   this.updateUser(this.state.userteam)
-  // }
+  componentDidMount () {
+    this.updateUser(this.state.userteam)
+  }
 
+  // issue is state does not update after log in/out
   updateUser = (team) => {
-    this.setState({ userteam: team })
+    this.setState({ userteam: team || getTeam() })
   }
 
   render () {
     return (
       <Router>
         <div className='container'>
-          <Nav onAuth={this.updateUser}/>
+          <Nav onAuth={this.updateUser} userteam={this.state.userteam}/>
           <div className='body-container'>
             <Menu />
             <Switch>
-              <Route exact path='/' component={Home} />
-              <Route path='/positions' component={Positions} />
-              <Route 
-                path='/watchlist' 
+              <Route exact path='/' 
+                render={(props) => <Home userteam={this.state.userteam} />}
+              />
+              <Route path='/positions' 
+                render={(props) => <Positions userteam={this.state.userteam} />}
+              />
+              <Route path='/watchlist' 
                 render={(props) => <Watchlist userteam={this.state.userteam} />}
               />
               <Route path='/closed' component={Closed} />
               <Route path='/account' component={Account} />
-              <Route path='/login' component={Login} />
+              <Route path='/login' 
+                render={(props) => <Login onAuth={this.updateUser} />}
+              />
               <Route render={function () {
                 return <p>Page Not Found</p>
               }} />
