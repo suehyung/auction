@@ -17,9 +17,12 @@ function getUser () {
   }
 }
 
-function getUserProfile () {
-  let decoded = jwt.decode(this.getToken())
-  return decoded
+function getTeam () {
+  let user = null
+  if (getToken()) {
+    user = jwt.verify(getToken(), APP_SECRET)
+    return user.team
+  }
 }
 
-export { getToken, getUser, getUserProfile, removeToken }
+export { getToken, getUser, getTeam, removeToken }
