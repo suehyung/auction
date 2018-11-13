@@ -94,8 +94,8 @@ class Login extends Component {
   _confirm = async data => {
     const { token } = this.state.login ? data.login : data.signup
     localStorage.setItem(AUTH_TOKEN, token)
-    let userteam = getTeam()
-    this.props.onAuth.bind(null, userteam)
+    const userteam = getTeam()
+    this.props.login(userteam)
     this.props.history.push(`/`)
   }
 }

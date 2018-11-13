@@ -13,23 +13,22 @@ import { getTeam } from '../utils/User'
 class App extends Component {
   constructor (props) {
     super(props)
-    this.state = { userteam: '' }
+    this.state = { userteam: getTeam() }
   }
 
   componentDidMount () {
     this.updateUser(this.state.userteam)
   }
 
-  // issue is state does not update after log in/out
   updateUser = (team) => {
-    this.setState({ userteam: team || getTeam() })
+    this.setState({ userteam: team })
   }
 
   render () {
     return (
       <Router>
         <div className='container'>
-          <Nav onAuth={this.updateUser} userteam={this.state.userteam}/>
+          <Nav logout={this.updateUser} userteam={this.state.userteam}/>
           <div className='body-container'>
             <Menu />
             <Switch>
@@ -45,7 +44,7 @@ class App extends Component {
               <Route path='/closed' component={Closed} />
               <Route path='/account' component={Account} />
               <Route path='/login' 
-                render={(props) => <Login onAuth={this.updateUser} />}
+                render={(props) => <Login login={this.updateUser} />}
               />
               <Route render={function () {
                 return <p>Page Not Found</p>

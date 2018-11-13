@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import { getToken, removeToken } from '../utils/User'
 
-function Nav (props) {
+function Nav (props) {  
   return (
     <div className='title-container'>
       <div className='title'>
@@ -14,7 +14,7 @@ function Nav (props) {
         {getToken()
           ? <div onClick={() => {
             removeToken()
-            props.onAuth.bind(null, null)
+            props.logout()
             props.history.push(`/`)
           }}>
             <b>Logout</b> ({props.userteam})
