@@ -225,7 +225,7 @@ class PlayerTable extends Component {
   }
 
   render() {
-    const { classes, players, onSelect } = this.props
+    const { classes, players, onSelect, bidder } = this.props
     const { order, orderBy, rowsPerPage, page, selectedPosition } = this.state
 
     return (
@@ -246,7 +246,10 @@ class PlayerTable extends Component {
                 .filter(player => {return player.position.includes(selectedPosition.value)})
                 .map(player => {
                   return (
-                    <tr className='list-row' key={player.id}>
+                    <tr className={player.maxbidder === bidder 
+                      ? 'list-row highlight' 
+                      : 'list-row'} 
+                      key={player.id}>
                       <td className='list-name'
                         onClick = {onSelect.bind(null, player)}>
                         <p>{player.name}</p>
@@ -257,7 +260,7 @@ class PlayerTable extends Component {
                         <Countdown closingtime={player.closingtime} />
                       </td>
                       <td className='list-price' >
-                        <ShowPrice price={player.bids[0]} />
+                        <ShowPrice price={player.price} />
                       </td>
                     </tr>
                   )
