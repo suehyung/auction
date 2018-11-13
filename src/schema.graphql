@@ -17,8 +17,8 @@ type Mutation {
     position: String!,
     closingtime: Int!,
     price: [Float!],
-    bidhistory: [Float!],
-    bidder: [String!],
+    bids: [Float!],
+    bidders: [String!],
     fangraphsid: String,
     fantraxid: String,
     watchlist: [String!]): Player!

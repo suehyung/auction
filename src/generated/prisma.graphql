@@ -1,5 +1,5 @@
 # source: https://ibl02-auction.herokuapp.com/auction/dev
-# timestamp: Tue Nov 06 2018 15:00:24 GMT-0800 (Pacific Standard Time)
+# timestamp: Mon Nov 12 2018 13:39:38 GMT-0800 (Pacific Standard Time)
 
 type AggregatePlayer {
   count: Int!
@@ -82,8 +82,8 @@ type Player implements Node {
   position: String!
   closingtime: Int!
   price: Float
-  bidhistory: [Float!]!
-  bidder: [String!]!
+  bids: [Float!]!
+  bidders: [String!]!
   bidtimestamp: [Float!]!
   maxbid: Float
   maxbidder: String
@@ -102,11 +102,11 @@ type PlayerConnection {
   aggregate: AggregatePlayer!
 }
 
-input PlayerCreatebidderInput {
+input PlayerCreatebiddersInput {
   set: [String!]
 }
 
-input PlayerCreatebidhistoryInput {
+input PlayerCreatebidsInput {
   set: [Float!]
 }
 
@@ -124,8 +124,8 @@ input PlayerCreateInput {
   maxbidder: String
   fangraphsid: String
   fantraxid: String
-  bidhistory: PlayerCreatebidhistoryInput
-  bidder: PlayerCreatebidderInput
+  bids: PlayerCreatebidsInput
+  bidders: PlayerCreatebiddersInput
   bidtimestamp: PlayerCreatebidtimestampInput
   watchlist: WatchlistCreateManyWithoutPlayerInput
 }
@@ -145,8 +145,8 @@ input PlayerCreateWithoutWatchlistInput {
   maxbidder: String
   fangraphsid: String
   fantraxid: String
-  bidhistory: PlayerCreatebidhistoryInput
-  bidder: PlayerCreatebidderInput
+  bids: PlayerCreatebidsInput
+  bidders: PlayerCreatebiddersInput
   bidtimestamp: PlayerCreatebidtimestampInput
 }
 
@@ -194,8 +194,8 @@ type PlayerPreviousValues {
   position: String!
   closingtime: Int!
   price: Float
-  bidhistory: [Float!]!
-  bidder: [String!]!
+  bids: [Float!]!
+  bidders: [String!]!
   bidtimestamp: [Float!]!
   maxbid: Float
   maxbidder: String
@@ -242,11 +242,11 @@ input PlayerSubscriptionWhereInput {
   node: PlayerWhereInput
 }
 
-input PlayerUpdatebidderInput {
+input PlayerUpdatebiddersInput {
   set: [String!]
 }
 
-input PlayerUpdatebidhistoryInput {
+input PlayerUpdatebidsInput {
   set: [Float!]
 }
 
@@ -264,8 +264,8 @@ input PlayerUpdateInput {
   maxbidder: String
   fangraphsid: String
   fantraxid: String
-  bidhistory: PlayerUpdatebidhistoryInput
-  bidder: PlayerUpdatebidderInput
+  bids: PlayerUpdatebidsInput
+  bidders: PlayerUpdatebiddersInput
   bidtimestamp: PlayerUpdatebidtimestampInput
   watchlist: WatchlistUpdateManyWithoutPlayerInput
 }
@@ -288,8 +288,8 @@ input PlayerUpdateWithoutWatchlistDataInput {
   maxbidder: String
   fangraphsid: String
   fantraxid: String
-  bidhistory: PlayerUpdatebidhistoryInput
-  bidder: PlayerUpdatebidderInput
+  bids: PlayerUpdatebidsInput
+  bidders: PlayerUpdatebiddersInput
   bidtimestamp: PlayerUpdatebidtimestampInput
 }
 
