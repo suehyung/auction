@@ -257,7 +257,7 @@ class PlayerTable extends Component {
                         <Countdown closingtime={player.closingtime} />
                       </td>
                       <td className='list-price' >
-                        <ShowPrice price={player.price} />
+                        <ShowPrice price={player.bids[0]} />
                       </td>
                     </tr>
                   )

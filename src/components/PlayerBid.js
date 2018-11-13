@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 const PLACE_BID = gql`
   mutation PlaceBid($playerId: String!, $bid: Float!, $bidder: String!) {
     placebid(playerId: $playerId, bid: $bid, bidder: $bidder) {
-      id price bidder
+      id bids bidders
     }
   }
 `
@@ -55,9 +55,9 @@ class PlayerBid extends Component {
             </div>
             (or 1m after last bid)
             <div className='current-price'>
-              <ShowPrice price={playerData[0].price} />
+              <ShowPrice price={playerData[0].bids[0]} />
             </div>
-            <div className='bidder'>{playerData[0].bidder[0]}</div>
+            <div className='bidder'>{playerData[0].bidders[0]}</div>
           </div>
           <div className='player-photo'
             style={(selectedPlayer.fantraxid !== null)

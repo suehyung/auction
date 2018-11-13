@@ -12,8 +12,8 @@ const PLAYERS_LIST = gql`
       team
       position
       closingtime
-      price
-      bidder
+      bids
+      bidders
       bidtimestamp
       maxbidder
       maxbid
