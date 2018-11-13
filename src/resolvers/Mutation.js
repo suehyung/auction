@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { APP_SECRET, getUserId } = require('../utils')
+const processBid = require('../utils/processBid')
 
 async function signup (parent, args, context, info) {
   const password = await bcrypt.hash(args.password, 10)
@@ -74,22 +75,18 @@ async function placebid (parent, args, context, info) {
     throw new Error('Must be logged in to bid')
   }
 
-  let bidTime = new Date()
-  let timestamp = bidTime.getTime()
+  let priceHistory = await context.db.query.player({ where: {
+    id: args.playerId }}, `{ bids bidders bidtimestamp maxbid maxbidder closingtime }`)
 
-  const priceHistory = await context.db.query.player({ where: {
-    id: args.playerId }}, `{ bidhistory bidder bidtimestamp }`)
-  console.log(priceHistory)
-  priceHistory.bidhistory.unshift(args.bid)
-  priceHistory.bidder.unshift(args.bidder)
-  priceHistory.bidtimestamp.unshift(timestamp)
+  priceHistory = processBid(priceHistory, args.bid, args.bidder)
 
   return context.db.mutation.updatePlayer(
     {
       data: {
-        price: args.bid,
-        bidhistory: { set: priceHistory.bidhistory },
-        bidder: { set: priceHistory.bidder },
+        maxbid: priceHistory.maxbid,
+        maxbidder: priceHistory.maxbidder,
+        bids: { set: priceHistory.bids },
+        bidders: { set: priceHistory.bidders },
         bidtimestamp: { set: priceHistory.bidtimestamp }
       },
       where: {
@@ -108,8 +105,8 @@ function post (parent, args, context, info) {
         position: args.position,
         closingtime: args.closingtime,
         price: args.price,
-        bidhistory: args.bidhistory,
-        bidder: args.bidder,
+        bids: args.bids,
+        bidders: args.bidders,
         bidtimestamp: args.bidtimestamp,
         fangraphsid: args.fangraphsid,
         fantraxid: args.fantraxid
