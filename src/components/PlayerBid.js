@@ -8,7 +8,7 @@ import Tooltip from '@material-ui/core/Tooltip'
 const PLACE_BID = gql`
   mutation PlaceBid($playerId: String!, $bid: Float!, $bidder: String!) {
     placebid(playerId: $playerId, bid: $bid, bidder: $bidder) {
-      id bids bidders
+      id price bids bidders
     }
   }
 `

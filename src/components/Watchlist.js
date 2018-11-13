@@ -12,6 +12,7 @@ const PLAYERS_LIST = gql`
       team
       position
       closingtime
+      price
       bids
       bidders
       bidtimestamp
@@ -58,7 +59,8 @@ class Watchlist extends Component {
               <div className='leftpane'>
                 <PlayerTable
                   onSelect={this.updatePlayer}
-                  players={data.players} />
+                  players={data.players}
+                  bidder={this.props.userteam} />
               </div>
               <div className='rightpane'>
                 <PlayerBid

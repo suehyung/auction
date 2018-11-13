@@ -76,13 +76,14 @@ async function placebid (parent, args, context, info) {
   }
 
   let priceHistory = await context.db.query.player({ where: {
-    id: args.playerId }}, `{ bids bidders bidtimestamp maxbid maxbidder closingtime }`)
+    id: args.playerId }}, `{ price bids bidders bidtimestamp maxbid maxbidder closingtime }`)
 
   priceHistory = processBid(priceHistory, args.bid, args.bidder)
 
   return context.db.mutation.updatePlayer(
     {
       data: {
+        price: priceHistory.price,
         maxbid: priceHistory.maxbid,
         maxbidder: priceHistory.maxbidder,
         bids: { set: priceHistory.bids },
@@ -92,7 +93,7 @@ async function placebid (parent, args, context, info) {
       where: {
         id: args.playerId
       }
-    }, info
+    }, `{ id price bids bidders }`
   )
 }
 

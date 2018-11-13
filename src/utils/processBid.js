@@ -3,8 +3,6 @@ function processBid (priceHistory, bid, bidder) {
   let bids = priceHistory.bids
   let bidders = priceHistory.bidders
   let bidtimestamp = priceHistory.bidtimestamp
-  let maxbid = priceHistory.maxbid
-  let maxbidder = priceHistory.maxbidder
   let closingtime = priceHistory.closingtime
 
   const bidIncrement = 0.20
@@ -33,57 +31,64 @@ function processBid (priceHistory, bid, bidder) {
     bids.unshift(0.40)
     bidders.unshift(bidder)
     bidtimestamp.unshift(timestamp)
-    maxbid = bid
-    maxbidder = bidder
+
+    priceHistory.maxbid = bid
+    priceHistory.maxbidder = bidder
+    priceHistory.price = 0.40
 
     return priceHistory
   }
 
   // Bid equals maxbid, is outbid by proxy bid
-  if (bid === maxbid && bidder !== maxbidder) {
+  if (bid === priceHistory.maxbid && bidder !== priceHistory.maxbidder) {
     bids.unshift(bid)
     bidders.unshift(bidder)
     bidtimestamp.unshift(timestamp)
 
-    bids.unshift(maxbid)
-    bidders.unshift(maxbidder)
+    bids.unshift(priceHistory.maxbid)
+    bidders.unshift(priceHistory.maxbidder)
     bidtimestamp.unshift(timestamp)
+
+    priceHistory.price = bid
 
     return priceHistory
   } else
 
   // Bid beats maxbid
-  if (bid > maxbid && bidder !== maxbidder) {
-    bids.unshift(maxbid)
-    bidders.unshift(maxbidder)
+  if (bid > priceHistory.maxbid && bidder !== priceHistory.maxbidder) {
+    bids.unshift(priceHistory.maxbid)
+    bidders.unshift(priceHistory.maxbidder)
     bidtimestamp.unshift(timestamp)
 
-    bids.unshift(maxbid + bidIncrement)
+    bids.unshift(priceHistory.maxbid + bidIncrement)
     bidders.unshift(bidder)
     bidtimestamp.unshift(timestamp)
 
-    maxbidder = bidder
-    maxbid = bid
+    priceHistory.maxbidder = bidder
+    priceHistory.maxbid = bid
+    priceHistory.price = bids[0]
 
     return priceHistory
   } else
 
   // Maxbidder raises maxbid
-  if (bid >= maxbid && bidder === maxbidder) {
-    maxbid = bid
+  if (bid >= priceHistory.maxbid && bidder === priceHistory.maxbidder) {
+    priceHistory.maxbid = bid
 
     return priceHistory
   } else
 
   // Bid loses to maxbid
-  if (bid < maxbid && bidder !== maxbidder) {
+  if (bid < priceHistory.maxbid && bidder !== priceHistory.maxbidder) {
     bids.unshift(bid)
     bidders.unshift(bidder)
     bidtimestamp.unshift(timestamp)
 
     bids.unshift(bid + bidIncrement)
-    bidders.unshift(maxbidder)
+    bidders.unshift(priceHistory.maxbidder)
     bidtimestamp.unshift(timestamp)
+
+    priceHistory.price = bids[0]
 
     return priceHistory
   } else {

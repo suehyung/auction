@@ -8,7 +8,7 @@ function FormatPrice (price) {
 function ShowPrice (props) {
   return (
     props.price
-      ? <div>&#36;{FormatPrice(props.price)}</div>
+      ? <div>${FormatPrice(props.price)}</div>
       : <div></div>
   )
 }
