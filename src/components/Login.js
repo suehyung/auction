@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
-import { AUTH_TOKEN } from '../utils'
+import { AUTH_TOKEN } from '../constants'
 import { getTeam } from '../utils/userAuth'
 import { withRouter } from 'react-router'
 

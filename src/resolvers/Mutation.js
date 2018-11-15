@@ -1,7 +1,18 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET, getUserId } = require('../utils')
+const { APP_SECRET } = require('../constants')
 const processBid = require('../utils/processBid')
+
+function getUserId (context) {
+  const Authorization = context.request.get('Authorization')
+  if (Authorization) {
+    const token = Authorization.replace('Bearer ', '')
+    const user = jwt.verify(token, APP_SECRET)
+    return user.id
+  }
+
+  throw new Error('Not authenticated')
+}
 
 async function signup (parent, args, context, info) {
   const password = await bcrypt.hash(args.password, 10)
