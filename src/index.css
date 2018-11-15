@@ -538,6 +538,16 @@ input::placeholder {
   border-radius: 0 10px 10px 0;
 }
 
+.error {
+  position: absolute;
+  top: 460px;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  font-size: 14px;
+  font-weight: bold;
+  color: red;
+}
 
 
 /* Styles for Login Page */

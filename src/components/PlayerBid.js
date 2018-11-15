@@ -70,11 +70,14 @@ class PlayerBid extends Component {
             variables={{ playerId, bid, bidder }}
             onCompleted={this.resetInput}
           >
-            {mutation => (
-              <form className='bid-form' action='javascript:void(0)'
+            {(mutation, {error, data}) => (
+              <div className='box'>
+                {error && <div className='error'>{error.message}</div>}
+                <form className='bid-form' action='javascript:void(0)'
               // action above prevents page reload
                 onSubmit={mutation}
               >
+                
                 <div className='dollar'>
                   <i>$</i>
                   <input
@@ -93,6 +96,7 @@ class PlayerBid extends Component {
                 : <input className='button bid-button' onClick={mutation}
                   value='PLACE BID' type='button'/> }
               </form>
+              </div>
             )}
           </Mutation>
         </div>
