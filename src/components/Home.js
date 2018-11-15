@@ -17,21 +17,21 @@ class Home extends Component {
         <div className='leftpane'>
           <div className='text'><h2>Welcome, {this.props.userteam}</h2>To start, select a position. You can sort by name, closing date, or price, and filter by closing round.</div>
           <div className='text'><h2>Tips</h2>Winning bids will be highlighted:
-            <tr className='list-row highlight'>
-              <td className='list-name'>
+            <div className='list-row highlight'>
+              <div className='list-name'>
                 <p>Sid Fernandez</p>
                 {this.state.toggle === true
                   ? <div className='heart watchlist'
                     onClick={this.updateToggle}><div></div></div>
                   : <div className='no-heart watchlist'
                     onClick={this.updateToggle}><div></div></div>}
-              </td>
-              <td></td>
-              <td className='list-closes'><div>6d 12h 34m</div></td>
-              <td className='list-price'>$8.80</td>
-            </tr>
+              </div>
+              <div></div>
+              <div className='list-closes'><div>6d 12h 34m</div></div>
+              <div className='list-price'>$8.80</div>
+            </div>
             <br></br>
-            <tr>Tap or click on the heart to add or remove a player from your Watchlist.</tr>
+            <div>Tap or click on the heart to add or remove a player from your Watchlist.</div>
           </div>
           <div className='text'><h2>Bidding Rules</h2>
             <ul>
