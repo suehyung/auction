@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { getUser } from '../utils/User'
 import { Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
@@ -15,7 +15,7 @@ const TOGGLE_WATCHLIST = gql`
 let userId = getUser()
 
 // Add toggle on click function to add/remove watchlist array element
-class CheckWatchlist extends React.Component {
+class CheckWatchlist extends Component {
   constructor (props) {
     super(props)
     this.state = { toggle: false }
@@ -44,7 +44,6 @@ class CheckWatchlist extends React.Component {
       <Mutation
         mutation = {TOGGLE_WATCHLIST}
         variables = {{playerId}}
-        onCompleted = {this.updateToggle}
       >
         {mutation => (<div onClick={ mutation }> </div>)}
       </Mutation>
@@ -55,8 +54,10 @@ class CheckWatchlist extends React.Component {
           <div className='no-heart watchlist'></div>
         </Tooltip>
         : this.state.toggle === true
-          ? <div className='heart watchlist' >{ToggleMutation}</div>
-          : <div className='no-heart watchlist' >{ToggleMutation}</div>
+          ? <div className='heart watchlist' onClick={this.updateToggle}>
+            {ToggleMutation}</div>
+          : <div className='no-heart watchlist' onClick={this.updateToggle}>
+            {ToggleMutation}</div>
     )
   }
 }
