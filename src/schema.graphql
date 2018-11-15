@@ -4,6 +4,7 @@
 type Query {
   info: String!
   players(filter: String, orderBy: PlayerOrderByInput): [Player!]!
+  closedplayers(filter: String, orderBy: PlayerOrderByInput): [Player!]!
   users(filter: String, orderBy: UserOrderByInput): [User!]!
   player(id: ID!): Player
   user(id: ID!): User

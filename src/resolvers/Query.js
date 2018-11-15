@@ -1,14 +1,17 @@
 function players (parent, args, context, info) {
-  const where = args.filter
-    ? {
-      OR: [
-        { name_contains: args.filter },
-        { position_contains: args.filter }
-      ]
-    }
-    : {}
+  let currentTime = Math.floor(Date.now() / 1000)
+  console.log(currentTime)
 
-  return context.db.query.players({ where, orderBy: args.orderBy }, info)
+  return context.db.query.players(
+    { where: { closingtime_gte: currentTime }, orderBy: args.orderBy }, info)
+}
+
+function closedplayers (parent, args, context, info) {
+  let currentTime = Math.floor(Date.now() / 1000)
+  console.log(currentTime)
+
+  return context.db.query.players(
+    { where: { closingtime_lte: currentTime }, orderBy: args.orderBy }, info)
 }
 
 function player (parent, args, context, info) {
@@ -32,4 +35,4 @@ function getuser (parent, args, context, info) {
   return context.db.query.user({ where: { id: args.id } }, `{ team }`)
 }
 
-module.exports = { players, users, player, getuser }
+module.exports = { players, closedplayers, users, player, getuser }
