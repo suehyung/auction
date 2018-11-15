@@ -11,7 +11,7 @@ function processBid (priceHistory, bid, bidder) {
   let timestamp = bidTime.getTime()
 
   // Bid must be greater than min bid and current price
-  if (bid <= 0.40 || bid <= bids[0]) {
+  if (bid < 0.40 || bid <= bids[0]) {
     throw new Error('Bid is too low')
   }
 
@@ -91,8 +91,6 @@ function processBid (priceHistory, bid, bidder) {
     priceHistory.price = bids[0]
 
     return priceHistory
-  } else {
-    throw new Error('Bid must exceed your maximum bid')
   }
 }
 
