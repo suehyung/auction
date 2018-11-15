@@ -6,18 +6,19 @@ function processBid (priceHistory, bid, bidder) {
   let closingtime = priceHistory.closingtime
 
   const bidIncrement = 0.20
+  const minBid = 0.40
 
   let bidTime = new Date()
   let timestamp = bidTime.getTime()
 
   // Bid must be greater than min bid and current price
-  if (bid < 0.40 || bid <= bids[0]) {
+  if (bid < minBid || bid <= bids[0]) {
     throw new Error('Bid is too low')
   }
 
   // Bid must be in proper increment
   if ((bid * 10) % (bidIncrement * 10) !== 0) {
-    throw new Error(`Bid must be in ${bidIncrement} increments`)
+    throw new Error(`Bids must be in ${bidIncrement} increments`)
   }
 
   // Check if auction is closed
@@ -28,13 +29,13 @@ function processBid (priceHistory, bid, bidder) {
 
   // Initial bid
   if (bids.length === 0) {
-    bids.unshift(0.40)
+    bids.unshift(minBid)
     bidders.unshift(bidder)
     bidtimestamp.unshift(timestamp)
 
     priceHistory.maxbid = bid
     priceHistory.maxbidder = bidder
-    priceHistory.price = 0.40
+    priceHistory.price = minBid
 
     return priceHistory
   }
