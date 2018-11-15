@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { withRouter } from 'react-router'
-import { getToken, removeToken } from '../utils/User'
+import { getToken, removeToken } from '../utils/userAuth'
 
 function Nav (props) {  
   return (

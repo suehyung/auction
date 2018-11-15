@@ -8,7 +8,7 @@ import Menu from './Menu'
 import Nav from './Nav'
 import Positions from './Positions'
 import Watchlist from './Watchlist'
-import { getTeam } from '../utils/User'
+import { getTeam } from '../utils/userAuth'
 
 class App extends Component {
   constructor (props) {

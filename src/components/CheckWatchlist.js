@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getUser } from '../utils/User'
+import { getUser } from '../utils/userAuth'
 import { Mutation } from 'react-apollo'
 import { gql } from 'apollo-boost'
 import PropTypes from 'prop-types'
