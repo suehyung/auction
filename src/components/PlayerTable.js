@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Menu, MenuItem } from '@material-ui/core';
@@ -10,6 +11,17 @@ import Tooltip from '@material-ui/core/Tooltip'
 import FilterListIcon from '@material-ui/icons/FilterList'
 import { Countdown, ShowPrice } from './Formatting'
 import CheckWatchlist from './CheckWatchlist'
+import { Query } from 'react-apollo'
+import { gql } from 'apollo-boost'
+
+const USER_TEAMS = gql`
+  {
+    users {
+      id
+      team
+    }
+  }
+`
 
 // Sorting functions below
 function stableSort(array, cmp) {
@@ -42,15 +54,7 @@ function getSorting(order, orderBy) {
   }
 }
 
-// Table headers and Material UI style settings
-const rows = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'watchlist', numeric: false, disablePadding: true, label: 'Watchlist' },
-  { id: 'closingtime', numeric: false, disablePadding: true, label: 'Closing' },
-  { id: 'price', numeric: true, disablePadding: true, label: 'Price' }
-]
-
-// List of options in the position dropdown
+// List of options in the menu dropdown
 const positions = [
   {value: '', display: 'All'},
   {value: 'C ', display: 'Catcher'},
@@ -86,7 +90,11 @@ class EnhancedTableToolbar extends Component {
 
     return (
       <div className='drop-menu'>
-        <div className='position'>{this.props.selectedPosition.display || 'All'}</div>
+        <div className='position'>
+          {this.props.location.pathname === '/closed'
+            ? this.props.selectedPosition.team || 'All'
+            : this.props.selectedPosition.display || 'All'}
+        </div>
         <Tooltip title='Filter'>
           <IconButton aria-label="Filter list">
             <FilterListIcon />
@@ -95,23 +103,56 @@ class EnhancedTableToolbar extends Component {
         <button className='dropdown purple'
           aria-owns={anchorEl ? 'simple-menu' : null}
           aria-haspopup='true'
-          onClick={this.handleClick}
-        >POSITION</button>
-        <Menu
-          anchorEl={anchorEl}
-          open={Boolean(anchorEl)}
-          onClose={() => this.setState({ anchorEl: null })}
-        >
-          {positions.map(position => {
-            return (
-              <MenuItem
-              key= {position.value}
-              onClick={() => {this.props.onPositionSelect(position);this.handleClose()}}>
-                {position.display}
-              </MenuItem>
-            )
-          })}
-        </Menu>
+          onClick={this.handleClick}>
+          {this.props.location.pathname === '/closed'
+            ? 'TEAM'
+            : 'POSITION'}
+        </button>
+        {this.props.location.pathname === '/closed'
+        ? <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={() => this.setState({ anchorEl: null })}
+          >
+            <MenuItem key= {'All'} onClick={() => 
+              {this.props.onPositionSelect({team: ''}); this.handleClose()}}>All
+            </MenuItem>
+            <MenuItem key= {'None'} onClick={() => 
+              {this.props.onPositionSelect({team: 'None'}); this.handleClose()}}>None
+            </MenuItem>
+            <Query query={USER_TEAMS}>
+              {({ loading, error, data }) => {
+                if (loading) return (<div></div>) 
+                if (error) return (<div>`Oops! ${error.message}`</div>)
+
+                return (
+                  data.users.map(user => {
+                    return (
+                      <MenuItem key= {user.id} onClick={() => 
+                      {this.props.onPositionSelect(user); 
+                      this.handleClose()}}>{user.team}
+                      </MenuItem>
+                    )
+                  })          
+                )
+              }}
+            </Query>
+          </Menu>
+        : <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={() => this.setState({ anchorEl: null })}
+          >
+            {positions.map(position => {
+              return (
+                <MenuItem key= {position.value} onClick={() => 
+                {this.props.onPositionSelect(position); this.handleClose()}}>
+                  {position.display}
+                </MenuItem>
+              )
+            })}
+          </Menu>
+        }
       </div>
     )
   }
@@ -127,6 +168,22 @@ const toolbarStyles = theme => ({
 })
 
 EnhancedTableToolbar = withStyles(toolbarStyles)(EnhancedTableToolbar)
+const TableToolbar = withRouter(EnhancedTableToolbar)
+
+// Table headers and Material UI style settings
+const rows = [
+  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'watchlist', numeric: false, disablePadding: true, label: 'Watchlist' },
+  { id: 'closingtime', numeric: false, disablePadding: true, label: 'Closing' },
+  { id: 'price', numeric: true, disablePadding: true, label: 'Price' }
+]
+
+const rowsClosed = [
+  { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
+  { id: 'empty', numeric: false, disablePadding: true, label: '' },
+  { id: 'team', numeric: false, disablePadding: true, label: 'Team' },
+  { id: 'price', numeric: true, disablePadding: true, label: 'Price' }
+]
 
 class EnhancedTableHead extends Component {
   createSortHandler = property => event => {
@@ -134,12 +191,12 @@ class EnhancedTableHead extends Component {
   }
 
   render() {
-    const { order, orderBy } = this.props
+    const { order, orderBy, location } = this.props
 
     return (
       <thead>
         <tr className='list-title'>
-          {rows.map(row => {
+          {(location.pathname === '/closed' ? rowsClosed : rows).map(row => {
             return (
               <TableCell
                 key={row.id}
@@ -170,8 +227,7 @@ class EnhancedTableHead extends Component {
 
 EnhancedTableHead.propTypes = {
   order: PropTypes.string.isRequired,
-  orderBy: PropTypes.string.isRequired,
-  rowCount: PropTypes.number.isRequired,
+  orderBy: PropTypes.string.isRequired
 }
 
 const styles = theme => ({
@@ -182,6 +238,65 @@ const styles = theme => ({
   },
 })
 
+// For use with closed auctions, maybe replace positions dropdown with teams
+function ActiveTableBody (props) {
+  const { players, order, orderBy, page, rowsPerPage, onSelect, selectedPosition, bidder } = props
+
+  return (
+    <tbody className='list-container'>
+      {stableSort(players, getSorting(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .filter(player => {return player.position.includes(selectedPosition.value)})
+        .map(player => {
+          return (
+            <tr className={player.maxbidder === bidder 
+              ? 'list-row highlight' 
+              : 'list-row'} 
+              key={player.id}>
+              <td className='list-name' onClick={onSelect.bind(null, player)}>
+                <p>{player.name}</p>
+                <CheckWatchlist user={player.watchlist} id={player.id} />
+              </td>
+              <td></td>
+              <td><Countdown closingtime={player.closingtime} /></td>
+              <td className='list-price'>
+                <ShowPrice price={player.price} />
+              </td>
+            </tr>
+          )
+        })
+      }
+    </tbody>
+  )
+}
+
+function ClosedTableBody (props) {
+  const { players, order, orderBy, page, rowsPerPage, onSelect, selectedPosition } = props
+
+  return (
+    <tbody className='list-container'>
+      {stableSort(players, getSorting(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .filter(player => {return player.maxbidder.includes(selectedPosition.team)})
+        .map(player => {
+          return (
+            <tr className='list-row' key={player.id}>
+              <td className='list-name' onClick={onSelect.bind(null, player)}>
+                <p>{player.name}</p>
+              </td>
+              <td></td>
+              <td>{player.maxbidder}</td>
+              <td className='list-price'>
+                <ShowPrice price={player.price} />
+              </td>
+            </tr>
+          )
+        })
+      }
+    </tbody>
+  )
+}
+
 class PlayerTable extends Component {
   constructor (props) {
     super(props)
@@ -191,7 +306,7 @@ class PlayerTable extends Component {
       orderBy: 'name',
       page: 0,
       rowsPerPage: 10,
-      selectedPosition: {value: ''}
+      selectedPosition: {value: '', team: ''}
     }
   }
 
@@ -225,12 +340,12 @@ class PlayerTable extends Component {
   }
 
   render() {
-    const { classes, players, onSelect, bidder } = this.props
+    const { classes, players, onSelect, bidder, location } = this.props
     const { order, orderBy, rowsPerPage, page, selectedPosition } = this.state
 
     return (
       <div>
-        <EnhancedTableToolbar onPositionSelect = {this.updatePosition}
+        <TableToolbar onPositionSelect = {this.updatePosition}
         selectedPosition = {this.state.selectedPosition}/>
         <div className={classes.tableWrapper}>
           <table className={classes.table} aria-labelledby="tableTitle">
@@ -238,35 +353,29 @@ class PlayerTable extends Component {
               order={order}
               orderBy={orderBy}
               onRequestSort={this.handleRequestSort}
-              rowCount={players.length}
+              location={location}
             />
-            <tbody className='list-container'>
-              {stableSort(players, getSorting(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .filter(player => {return player.position.includes(selectedPosition.value)})
-                .map(player => {
-                  return (
-                    <tr className={player.maxbidder === bidder 
-                      ? 'list-row highlight' 
-                      : 'list-row'} 
-                      key={player.id}>
-                      <td className='list-name'
-                        onClick = {onSelect.bind(null, player)}>
-                        <p>{player.name}</p>
-                        <CheckWatchlist user={player.watchlist} id={player.id} />
-                      </td>
-                      <td></td>
-                      <td className='list-closes'>
-                        <Countdown closingtime={player.closingtime} />
-                      </td>
-                      <td className='list-price' >
-                        <ShowPrice price={player.price} />
-                      </td>
-                    </tr>
-                  )
-                })
-              }
-            </tbody>
+            {location.pathname === '/closed'
+            ? <ClosedTableBody 
+                players={players}
+                order={order}
+                orderBy={orderBy}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                onSelect={onSelect}
+                selectedPosition={selectedPosition}
+              />
+            : <ActiveTableBody 
+                players={players}
+                order={order}
+                orderBy={orderBy}
+                page={page}
+                rowsPerPage={rowsPerPage}
+                bidder={bidder}
+                onSelect={onSelect}
+                selectedPosition={selectedPosition}
+              />
+            }
           </table>
         </div>
         <TablePagination
@@ -291,7 +400,12 @@ class PlayerTable extends Component {
 PlayerTable.propTypes = {
   classes: PropTypes.object.isRequired,
   players: PropTypes.array.isRequired,
-  onSelect: PropTypes.func.isRequired
+  onSelect: PropTypes.func.isRequired,
+  bidder: PropTypes.string,
+  location: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(PlayerTable)
+const StyledTable = withStyles(styles)(PlayerTable)
+
+// wrap with router to use location prop
+export default withRouter(StyledTable)
