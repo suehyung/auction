@@ -41,7 +41,9 @@ class App extends Component {
               <Route path='/watchlist' 
                 render={(props) => <Watchlist userteam={this.state.userteam} />}
               />
-              <Route path='/closed' component={Closed} />
+              <Route path='/closed'
+                render={(props) => <Closed userteam={this.state.userteam} />}
+              />
               <Route path='/account' component={Account} />
               <Route path='/login' 
                 render={(props) => <Login login={this.updateUser} />}
