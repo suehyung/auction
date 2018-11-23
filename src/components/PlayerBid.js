@@ -60,10 +60,15 @@ class PlayerBid extends Component {
             <div className='bidder'>{playerData[0].bidders[0]}</div>
           </div>
           <div className='player-photo'
-            style={(selectedPlayer.fantraxid !== null)
+            style={selectedPlayer.fantraxid !== null
               ? {backgroundImage: `url('https://img.fantrax.com/si/headshots/MLB/hs${selectedPlayer.fantraxid}_400_1.png')`}
-              : {backgroundImage: null} }>
-            <div className='photo-resize'></div>
+              : {backgroundImage: null} }
+          > 
+            {selectedPlayer.fangraphsid !== null 
+              ? <a href={'https://www.fangraphs.com/statss.aspx?playerid='+ selectedPlayer.fangraphsid} target='_blank' rel='noreferrer' tabindex='0'> 
+                <div className='photo-resize'></div>
+              </a>
+              : <div className='photo-resize'></div>}
           </div>
           <Mutation
             mutation={PLACE_BID}

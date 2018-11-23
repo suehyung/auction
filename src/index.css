@@ -448,12 +448,10 @@ path:hover {
   top: -230px;
   left: -20px;
   width: 40%;
-  /* background-image: url('./img/hs01cdg_400_6.png'); */
   background-repeat: no-repeat;
   background-size: cover;
   background-color: gray;
   border-radius: 50%;
-  z-index: 3;
 }
 
 .photo-resize {
