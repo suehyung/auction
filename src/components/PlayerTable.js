@@ -60,7 +60,6 @@ function ActiveTableBody (props) {
                 <p>{player.name}</p>
                 <CheckWatchlist user={player.watchlist} id={player.id} />
               </td>
-              <td></td>
               <td><Countdown closingtime={player.closingtime} /></td>
               <td className='list-price'>
                 <ShowPrice price={player.price} />
@@ -87,8 +86,7 @@ function ClosedTableBody (props) {
               <td className='list-name' onClick={onSelect.bind(null, player)}>
                 <p>{player.name}</p>
               </td>
-              <td></td>
-              <td>{player.maxbidder}</td>
+              <td className='list-closes'>{player.maxbidder}</td>
               <td className='list-price'>
                 <ShowPrice price={player.price} />
               </td>

@@ -8,14 +8,12 @@ import Tooltip from '@material-ui/core/Tooltip'
 // Table headers and Material UI style settings
 const rows = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'watchlist', numeric: false, disablePadding: true, label: 'Watchlist' },
   { id: 'closingtime', numeric: false, disablePadding: true, label: 'Closing' },
   { id: 'price', numeric: true, disablePadding: true, label: 'Price' }
 ]
 
 const rowsClosed = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'empty', numeric: false, disablePadding: true, label: '' },
   { id: 'team', numeric: false, disablePadding: true, label: 'Team' },
   { id: 'price', numeric: true, disablePadding: true, label: 'Price' }
 ]
