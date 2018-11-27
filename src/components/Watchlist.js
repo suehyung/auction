@@ -4,9 +4,11 @@ import { gql } from 'apollo-boost'
 import PlayerTable from './PlayerTable'
 import PlayerBid from './PlayerBid'
 
-const PLAYERS_LIST = gql`
+// Need to refetch query each time component loads
+const WATCHLIST_PLAYERS = gql`
   {
-    players {
+    watchplayers
+    {
       id
       name
       team
@@ -41,7 +43,7 @@ class Watchlist extends Component {
 
   render () {
     return (
-      <Query query={PLAYERS_LIST}>
+      <Query query={WATCHLIST_PLAYERS}>
         {({ error, loading, data }) => {
           if (error) return (
             <div className='leftpane'>
@@ -59,7 +61,7 @@ class Watchlist extends Component {
               <div className='leftpane'>
                 <PlayerTable
                   onSelect={this.updatePlayer}
-                  players={data.players}
+                  players={data.watchplayers}
                   bidder={this.props.userteam} />
               </div>
               <div className='rightpane'>
@@ -67,7 +69,7 @@ class Watchlist extends Component {
                   onSelect={this.updatePlayer}
                   selectedPlayer={this.state.selectedPlayer}
                   bidder={this.props.userteam}
-                  players={data.players} />
+                  players={data.watchplayers} />
               </div>
             </div>
           )
