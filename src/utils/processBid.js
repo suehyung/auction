@@ -5,8 +5,10 @@ function processBid (priceHistory, bid, bidder) {
   let bidtimestamp = priceHistory.bidtimestamp
   let closingtime = priceHistory.closingtime
 
+  // Auction settings, including sniper protection (in minutes)
   const bidIncrement = 0.20
   const minBid = 0.40
+  const sniper = 1
 
   let bidTime = new Date()
   let timestamp = bidTime.getTime()
@@ -22,8 +24,9 @@ function processBid (priceHistory, bid, bidder) {
   }
 
   // Check if auction is closed
-  if (timestamp > (closingtime * 1000)) {
-    console.log('Current time: ' + timestamp + ' and closes: ' + closingtime)
+  if (timestamp > (closingtime * 1000) &&
+  timestamp > (bidtimestamp[0] + (sniper * 60000))) {
+    console.log('Current time: ' + timestamp + ' and closes: ' + closingtime + 'with last bid at ' + bidtimestamp[0])
     throw new Error('Player auction is closed')
   }
 
