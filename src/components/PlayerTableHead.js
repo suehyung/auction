@@ -14,7 +14,7 @@ const rows = [
 
 const rowsClosed = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name' },
-  { id: 'team', numeric: false, disablePadding: true, label: 'Team' },
+  { id: 'maxbidder', numeric: false, disablePadding: true, label: 'Team' },
   { id: 'price', numeric: true, disablePadding: true, label: 'Price' }
 ]
 

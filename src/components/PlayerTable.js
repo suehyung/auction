@@ -8,8 +8,6 @@ import PlayerTableHead from './PlayerTableHead'
 import { Countdown, ShowPrice } from './Formatting'
 import CheckWatchlist from './CheckWatchlist'
 
-// Diagnose why sorting by team in closed doesn't work
-
 // Sorting functions below
 function stableSort(array, cmp) {
   const stabilizedThis = array.map((el, index) => [el, index])
@@ -41,7 +39,6 @@ function getSorting(order, orderBy) {
   }
 }
 
-// For use with closed auctions, maybe replace positions dropdown with teams
 function ActiveTableBody (props) {
   const { players, order, orderBy, page, rowsPerPage, onSelect, selectedMenu, bidder } = props
 
@@ -79,6 +76,7 @@ function ClosedTableBody (props) {
     <tbody className='list-container'>
       {stableSort(players, getSorting(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+        .filter(player => {return player.maxbidder !== null}) 
         .filter(player => {return player.maxbidder.includes(selectedMenu.team)})
         .map(player => {
           return (
