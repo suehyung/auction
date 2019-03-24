@@ -53,7 +53,6 @@ class Closed extends Component {
           )
 
           return (
-            // modify playertable and replace playerbid with bidhistory
             <div className='main-container'>
               <div className='leftpane'>
                 <PlayerTable

@@ -541,6 +541,16 @@ input::placeholder {
   color: red;
 }
 
+.history {
+  position: relative;
+  top: -100px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  font-size: 11px;
+  background-color: white;
+  padding: 20px;
+}
 
 
 /* Styles for Login Page */
