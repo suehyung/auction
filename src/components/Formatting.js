@@ -13,6 +13,12 @@ function ShowPrice (props) {
   )
 }
 
+function ShowDate (props) {
+  const ts = new Date(props.timestamp)
+
+  return ts.toLocaleString()
+}
+
 class Countdown extends React.Component {
   constructor (props) {
     super(props)
@@ -66,4 +72,4 @@ class Countdown extends React.Component {
   }
 }
 
-export { Countdown, ShowPrice }
+export { Countdown, ShowPrice, ShowDate }
