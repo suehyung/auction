@@ -1,9 +1,10 @@
 
-function processBid (priceHistory, bid, bidder) {
+function processBid (priceHistory, bidString, bidder) {
   let bids = priceHistory.bids
   let bidders = priceHistory.bidders
   let bidtimestamp = priceHistory.bidtimestamp
   let closingtime = priceHistory.closingtime
+  let bid = parseFloat(bidString)
 
   // Auction settings, including sniper protection (in minutes)
   const bidIncrement = 0.20
