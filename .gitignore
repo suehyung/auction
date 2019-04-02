@@ -11,9 +11,11 @@
 
 # tokens and secrets
 /src/utils/dev.js
+/prisma/.env
 
 # misc
 .DS_Store
+
 .env.local
 .env.development.local
 .env.test.local
