@@ -10,7 +10,7 @@
 /build
 
 # tokens and secrets
-/src/constants.js
+/src/utils/dev.js
 
 # misc
 .DS_Store
