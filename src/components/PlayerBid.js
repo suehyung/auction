@@ -53,7 +53,7 @@ function PlayerInfo (props) {
           : {backgroundImage: null} }
       > 
         {selectedPlayer.fangraphsid !== null 
-          ? <a href={'https://www.fangraphs.com/statss.aspx?playerid='+ selectedPlayer.fangraphsid} target='_blank' rel='noreferrer' tabIndex='0'> 
+          ? <a href={'https://www.fangraphs.com/statss.aspx?playerid='+ selectedPlayer.fangraphsid} target='_blank' rel='noopener noreferrer' tabIndex='0'> 
             <div className='photo-resize'></div>
           </a>
           : <div className='photo-resize'></div>}
@@ -144,9 +144,9 @@ class PlayerBid extends Component {
                     value={bid}
                     onChange={e => this.setState({ bid: e.target.value })}
                     type='number'
-                    step='.20' min='.40' max='40.00'
+                    step='0.20' min='0.40' max='40.00'
                     id='enter-bid'
-                    placeholder='.40'
+                    placeholder='0.40'
                   />
                 </div>
                 { bidder === undefined
