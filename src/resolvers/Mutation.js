@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET } = require('../constants')
+const { APP_SECRET } = require('../utils/constants')
 const processBid = require('../utils/processBid')
 
 function getUserId (context) {
