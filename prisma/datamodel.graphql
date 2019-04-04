@@ -18,7 +18,7 @@ type Player {
   bidders: [String!]
   bidtimestamp: [Float!]
   maxbid: Float
-  maxbidder: String = "None"
+  maxbidder: String @default(value: "None")
   fangraphsid: String
   fantraxid: String
   watchlist: [Watchlist!]!
