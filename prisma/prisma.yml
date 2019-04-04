@@ -1,13 +1,13 @@
 # The HTTP endpoint for your Prisma API
-endpoint: ${env:ENDPOINT}
+endpoint: 'https://ibl02-auction.herokuapp.com/auction/dev'
 
 # Points to the file that holds your data model
 datamodel: datamodel.graphql
 
 # Need to change the secret and move it to environment variables
 # heroku config:set PRISMA_SECRET=[yoursecret]
-# prisma deploy --env-file /src/constants.js
-secret: ${env:PRISMA_SECRET}
+# prisma deploy --env-file /src/utils/constants.js
+secret: 'mysecret123'
 
 # Deploy hook
 hooks:
