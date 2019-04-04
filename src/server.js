@@ -3,7 +3,6 @@ const { Prisma } = require('prisma-binding')
 const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const AuthPayload = require('./resolvers/AuthPayload')
-const { PRISMA_SECRET, ENDPOINT } = require('./utils/constants')
 
 const resolvers = {
   Query,
@@ -21,8 +20,8 @@ const server = new GraphQLServer({
     ...req,
     db: new Prisma({
       typeDefs: './src/generated/prisma.graphql',
-      endpoint: ENDPOINT,
-      secret: PRISMA_SECRET,
+      endpoint: 'https://ibl02-auction.herokuapp.com/auction/dev',
+      secret: 'mysecret123',
       debug: true
     })
   })

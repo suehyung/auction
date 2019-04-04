@@ -1,4 +1,4 @@
-import { AUTH_TOKEN, APP_SECRET } from '../utils/constants'
+import { AUTH_TOKEN, APP_SECRET } from '../constants'
 import jwt from 'jsonwebtoken'
 
 function removeToken () {

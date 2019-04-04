@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const { APP_SECRET } = require('../utils/constants')
+const { APP_SECRET } = require('../constants')
 
 // Returns user object
 function getUserId (context) {
@@ -41,8 +41,8 @@ function watchplayers (parent, args, context, info) {
   return context.db.query.players({ where, orderBy: args.orderBy }, info)
 }
 
-function getplayer (parent, args, context, info) {
-  return context.db.query.players({ where: { name_contains: args.name } }, info)
+function player (parent, args, context, info) {
+  return context.db.query.player({ where: { id: args.id } }, info)
 }
 
 function users (parent, args, context, info) {
@@ -67,6 +67,6 @@ module.exports = {
   closedplayers,
   watchplayers,
   users,
-  getplayer,
+  player,
   getuser
 }

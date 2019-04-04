@@ -6,7 +6,7 @@ import registerServiceWorker from './utils/registerServiceWorker'
 import { ApolloProvider } from 'react-apollo'
 import { ApolloClient, HttpLink, InMemoryCache } from 'apollo-boost'
 import { setContext } from 'apollo-link-context'
-import { AUTH_TOKEN } from './utils/constants'
+import { AUTH_TOKEN } from './constants'
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem(AUTH_TOKEN)
