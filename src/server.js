@@ -10,12 +10,14 @@ const resolvers = {
   AuthPayload
 }
 
+// process.env.ENDPOINT
+// process.env.PRISMA_SECRET
+
 const typeDefs = './src/schema.graphql'
 const options = { port: 4000 }
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
-  resolverValidationOptions: { requireResolversForResolveType: false },
   context: req => ({
     ...req,
     db: new Prisma({

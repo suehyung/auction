@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const { APP_SECRET } = require('../constants')
+const APP_SECRET = 'GraphQL-is-aw3some'
 const processBid = require('../utils/processBid')
 
 function getUserId (context) {

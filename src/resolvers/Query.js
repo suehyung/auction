@@ -1,7 +1,6 @@
 const jwt = require('jsonwebtoken')
-const { APP_SECRET } = require('../constants')
+const APP_SECRET = 'GraphQL-is-aw3some'
 
-// Returns user object
 function getUserId (context) {
   const Authorization = context.request.get('Authorization')
   if (Authorization) {
@@ -13,7 +12,6 @@ function getUserId (context) {
   }
 }
 
-// Query resolvers are below:
 function players (parent, args, context, info) {
   let currentTime = Math.floor(Date.now() / 1000)
 
