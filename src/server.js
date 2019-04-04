@@ -10,9 +10,6 @@ const resolvers = {
   AuthPayload
 }
 
-// process.env.ENDPOINT
-// process.env.PRISMA_SECRET
-
 const typeDefs = './src/schema.graphql'
 const options = { port: 4000 }
 const server = new GraphQLServer({
@@ -22,8 +19,8 @@ const server = new GraphQLServer({
     ...req,
     db: new Prisma({
       typeDefs: './src/generated/prisma.graphql',
-      endpoint: 'https://ibl02-auction.herokuapp.com/auction/dev',
-      secret: 'mysecret123',
+      endpoint: process.env.PRISMA_ENDPOINT,
+      secret: process.env.PRISMA_SECRET,
       debug: true
     })
   })
