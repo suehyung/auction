@@ -11,6 +11,7 @@
     "apollo-boost": "^0.1.15",
     "apollo-link-context": "^1.0.9",
     "bcryptjs": "^2.4.3",
+    "dotenv": "^7.0.0",
     "graphql-cli": "^2.17.0",
     "graphql-cli-load": "^0.1.5",
     "graphql-yoga": "^1.16.1",
@@ -26,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "server": "node src/server.js",
+    "server": "node -r dotenv/config src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
