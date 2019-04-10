@@ -15,6 +15,9 @@ const options = { port: 4000 }
 const server = new GraphQLServer({
   typeDefs,
   resolvers,
+  resolverValidationOptions: {
+    requireResolversForResolveType: false
+  },
   context: req => ({
     ...req,
     db: new Prisma({
@@ -27,3 +30,6 @@ const server = new GraphQLServer({
 })
 
 server.start(options, () => console.log('Server is running on localhost:' + options.port))
+
+//  endpoint: process.env.PRISMA_ENDPOINT,
+//  secret: process.env.PRISMA_SECRET,
