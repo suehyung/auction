@@ -1,13 +1,14 @@
-const APP_SECRET = 'GraphQL-is-aw3some'
+const APP_SECRET = process.env.APP_SECRET
 // old one is 'GraphQL-is-aw3some'
 
-const AUTH_TOKEN = 'auth-token'
+const AUTH_TOKEN = process.env.AUTH_TOKEN
 // old one is 'auth-token'
 
-const PRISMA_SECRET = 'mysecret123'
+const PRISMA_SECRET = process.env.PRISMA_SECRET
 // old one is 'mysecret123'
 
-const ENDPOINT = 'https://ibl02-auction.herokuapp.com/auction/dev'
+const ENDPOINT = process.env.PRISMA_ENDPOINT
+// old one is 'https://ibl02-auction.herokuapp.com/auction/dev'
 
 module.exports = {
   APP_SECRET,
